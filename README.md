@@ -1,6 +1,10 @@
 # CZ4045---NLP
 Project assignment for NTU CZ4045 Natural Language Processing
 
+## Version information
+- Python 3.6
+
+
 ## Contents
 - [Placing dataset files](placing-dataset-files)
 - [Project Installation Guide](project-installation-guide)
