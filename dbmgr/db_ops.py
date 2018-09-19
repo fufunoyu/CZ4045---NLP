@@ -1,8 +1,6 @@
-import itertools
 import json
 
 from datetime import datetime
-from utils import write_and_restart_line
 from .models import AmazonReview
 
 
@@ -12,7 +10,6 @@ amazon_review_file_loc = 'dataset/CellPhoneReview.json'
 
 def init_amazon_review_db():
     """ initialize the amazon review sqlite3 database with given dataset """
-    spinner = itertools.cycle(['|', '/', '-', '\\'])
     count = 0
     bulk_items = []
     with open(amazon_review_file_loc, 'r') as f:

@@ -1,7 +1,5 @@
 from django.db import models
 
-import re
-
 
 class AmazonReview(models.Model):
     """
