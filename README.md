@@ -14,11 +14,13 @@ The review dataset file are omitted to save space in project directory. Please p
 ### Project Installation Guide
 Project setup is as simple as the following 2 steps 
 #### 1. Install package requirements
+The following command will install the required python packages.
 ```
         $ pip install -r requirements.txt
 ```
 
 #### 2. Run migrations to create the sqlite3 database
+The purpose of using the database instead of operating directly on the `.json` is to speed up retrieval and query of the dataset. Execute the following command to create the database.
 ```
         $ python manage.py migrate
 ```
