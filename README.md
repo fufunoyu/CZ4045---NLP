@@ -6,9 +6,9 @@ Project assignment for NTU CZ4045 Natural Language Processing
 
 
 ## Contents
-- [Placing dataset files](placing-dataset-files)
-- [Project Installation Guide](project-installation-guide)
-- [Usage guide](usage-guide)
+- [Placing dataset files](#placing-dataset-files)
+- [Project Installation Guide](#project-installation-guide)
+- [Usage guide](#usage-guide)
 
 
 ## Placing dataset files
