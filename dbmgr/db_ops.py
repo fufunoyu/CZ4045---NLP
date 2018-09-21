@@ -33,3 +33,18 @@ def init_amazon_review_db():
             except Exception as e:
                 print(e)
         print("all amazon reviews were saved to database")
+
+
+def transform_amazon_review_db():
+    """ clean the amazon reviews record for NLP processing """
+
+    count = 0
+    amazonReviewToClean = AmazonReview.objects.filter(reviewText_noStopWords=None)
+    totalItemCount = amazonReviewToClean.count()
+
+    for ar in amazonReviewToClean:
+        ar.transform_text()
+        count += 1
+        if count % 1000 == 0:
+            print(str(count) + " of " + str(totalItemCount))
+    print("all amazon reviews text were cleaned")
