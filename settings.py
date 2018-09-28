@@ -18,3 +18,6 @@ DATABASES = {
         'NAME': 'cz4045_nlp.db',
     }
 }
+
+amazon_review_file_loc = 'dataset/CellPhoneReview.json'
+amazon_review_word_dict_loc = 'dataset/AmazonKeyword.txt'
