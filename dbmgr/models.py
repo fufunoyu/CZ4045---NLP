@@ -1,7 +1,7 @@
+import re
 from django.db import models
 from nltk.corpus import stopwords
 from nltk.tokenize import RegexpTokenizer
-from nltk.stem.porter import PorterStemmer
 
 
 class AmazonReview(models.Model):
@@ -26,7 +26,7 @@ class AmazonReview(models.Model):
         return self.reviewerID
 
     def _clean_text(self, input_text):
-        """ clean input text from stopwords, punctuation and stem it
+        """ clean input text from stopwords, punctuation, etc
 
         Args:
             input_text (str): text to remove stopwords and punctuations
@@ -36,12 +36,23 @@ class AmazonReview(models.Model):
 
         """
         input_text = input_text.lower()
+
+        # remove url
+        regex = r"https?\:\/\/[0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*(:(0-9)*)*(\/?)([a-zA-Z0-9\-\.\?\,\'\/\\\+&amp;%\$#_]*)?"
+        input_text = re.sub(regex, "", input_text, 0)
+
+        # add spaces between digit and alphabet
+        input_text = re.sub(r'\b(\d+)([a-z]+)\b', r'\g<1> \g<2>', input_text, 0)
+
+        # remove number
+        input_text = re.sub(r'\b\d+\b', "", input_text, 0)
+
+        # remove stopwords
         tokenizer = RegexpTokenizer(r'\w+')
         word_list = tokenizer.tokenize(input_text)
         filtered_words = [word for word in word_list if word not in stopwords.words('english')]
-        stemmer = PorterStemmer()
-        stemmed_words = [stemmer.stem(word) for word in filtered_words]
-        return " ".join(stemmed_words)
+
+        return " ".join(filtered_words)
 
     def transform_text(self):
         """
