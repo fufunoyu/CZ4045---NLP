@@ -1,0 +1,11 @@
+{"count": 1, "ids": [1], "pos": "np", "rank": 0.18484927706036386, "text": "tripod"}
+{"count": 1, "ids": [14, 1], "pos": "np", "rank": 0.16273199721212592, "text": "little tripod"}
+{"count": 3, "ids": [2], "pos": "vb", "rank": 0.15916098650193525, "text": "be"}
+{"count": 1, "ids": [5], "pos": "np", "rank": 0.1156864822762304, "text": "galaxy"}
+{"count": 1, "ids": [6], "pos": "nnp", "rank": 0.10700875395035016, "text": "s5"}
+{"count": 1, "ids": [4], "pos": "vbd", "rank": 0.08136599860606296, "text": "used"}
+{"count": 1, "ids": [7, 8], "pos": "np", "rank": 0.059705486577392906, "text": "iphone 4s"}
+{"count": 1, "ids": [11], "pos": "np", "rank": 0.046523687492096955, "text": "anything"}
+{"count": 1, "ids": [8], "pos": "nn", "rank": 0.029852743288696453, "text": "4s"}
+{"count": 1, "ids": [10], "pos": "vb", "rank": 0.029852743288696453, "text": "work"}
+{"count": 2, "ids": [7], "pos": "nnp", "rank": 0.023261843746048477, "text": "iphone"}

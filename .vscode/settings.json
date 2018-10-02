@@ -1,4 +1,4 @@
 {
-    "python.pythonPath": "${workspaceFolder}\\venv\\Scripts\\python.exe",
+    "python.pythonPath": "C:\\Users\\phangjunyu\\Anaconda3\\python.exe",
     "python.linting.pylintEnabled": false
 }
