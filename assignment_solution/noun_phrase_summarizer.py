@@ -1,22 +1,22 @@
-import pytextrank as ptr
+import pytextrank.pytextrank as ptr
 from dbmgr.models import AmazonReview
 import json
-from sys import argv
 
 stage0 = "assignment_solution/stages/stage0.json"
 stage1 = "assignment_solution/stages/stage1.json"
 stage2 = "assignment_solution/stages/stage2.json"
-stage3 = "assignment_solution/stages/stage3.json"
+stage_phrases = "assignment_solution/stages/key_phrases.txt"
 
-def generate_json_data(sample):
-    data = AmazonReview.objects.all()[sample:sample+1]
-    open(stage0, "w").close()
+def write_to_json(start, end):
+    #Concat and write all reviews to file
+    data = AmazonReview.objects.all()[start:end]
+    open(stage0, 'w').close()
     with open(stage0, "a") as outfile:
-        for counter, d in enumerate(data):
-            new_review = {"id":d.asin, "text": d.reviewText}
-            json.dump(new_review, outfile)
-            outfile.write("\n")
-    print(d.reviewText)
+        outfile.write("{\"id\": \"001\", \"text\": \"")
+        for d in data:
+            stripped = d.reviewText.replace("\"", "")
+            outfile.write(stripped + " ") #do we need fullstop?
+        outfile.write("\"}")
 
 def generate_noun_phrases():
     with open(stage1, "w") as f:
@@ -38,27 +38,15 @@ def collect_and_normalize(draw):
             f.write("%s\n" % ptr.pretty_print(rl._asdict()))
             # print(ptr.pretty_print(rl))
 
-def calculate_weights():
-    kernel = ptr.rank_kernel(stage2)
-
-    with open(stage3, 'w') as f:
-        for s in ptr.top_sentences(kernel, stage1):
-            f.write(ptr.pretty_print(s._asdict()))
-            f.write("\n")
-            # print(pytextrank.pretty_print(s._asdict()))
-
 def extract_key_phrases():
     phrases = ", ".join(set([p for p in ptr.limit_keyphrases(stage2, phrase_limit=12)]))
+    with open(stage_phrases, "w") as outfile:
+        outfile.write(phrases)
     print("Key phrases:")
     print(phrases)
 
 def test(start, end, draw=False):
-    for i in range(start, end):
-        print("reviewText " + str(i) + ": ")
-        generate_json_data(i)
-        generate_noun_phrases()
-        collect_and_normalize(draw)
-        # only for summary    
-        # calculate_weights()
-        extract_key_phrases()
-        print("\n")
+    write_to_json(start, end)
+    generate_noun_phrases()
+    collect_and_normalize(draw)
+    extract_key_phrases()
