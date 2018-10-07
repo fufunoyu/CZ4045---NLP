@@ -11,6 +11,8 @@ def usage():
 
 def main(argv):
 
+    from dbmgr import db_ops
+
     try:
         opts, remainders = getopt.getopt(argv, "h", ["help", ])
     except getopt.GetoptError:
@@ -27,8 +29,14 @@ def main(argv):
     for arg in remainders:
 
         if arg == 'initdb':
-            from dbmgr import db_ops
             db_ops.init_amazon_review_db()
+        elif arg == 'cleanrv':
+            db_ops.transform_amazon_review_db()
+        elif arg == 'initdict':
+            db_ops.init_amazon_keyword_dictionary()
+        elif arg == 'sentiment':
+            from assignment_solution.sentiment_word_detection import sentiment_word_analysis
+            sentiment_word_analysis()
         elif arg == '???':
             sys.exit()
 

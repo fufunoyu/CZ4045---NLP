@@ -4,7 +4,8 @@ import re
 from datetime import datetime
 from django.db import transaction
 from .models import AmazonReview
-from settings import amazon_review_file_loc, amazon_review_word_dict_loc
+from settings import amazon_review_word_dict_loc, english_word_dict_loc, \
+    filtered_amazon_review_word_dict_loc, filtered_amazon_review_word_dict_noNN_loc
 
 
 def init_amazon_review_db():
@@ -78,4 +79,36 @@ def init_amazon_keyword_dictionary():
     keywords_to_write = re.sub(r'\b\d+\b\n', "", keywords_to_write, 0)
 
     with open(amazon_review_word_dict_loc, 'a') as keyword_file:
+        keyword_file.write(keywords_to_write)
+
+
+def init_filtered_amazon_keyword_dictionary():
+    """ filter the built review keyword dictionary by valid english word """
+
+    with open(amazon_review_word_dict_loc) as f:
+        amazon_keywords = f.read().splitlines()
+
+    with open(english_word_dict_loc) as f:
+        english_words = f.read().splitlines()
+
+    filtered_keywords = [x for x in amazon_keywords if x in english_words]
+    keywords_to_write = "\n".join(filtered_keywords)
+
+    with open(filtered_amazon_review_word_dict_loc, 'a') as keyword_file:
+        keyword_file.write(keywords_to_write)
+
+
+def init_filtered_amazon_keyword_dictionary_noNN():
+    """ filter noun term from the review keyword dictionary """
+    import nltk
+    nltk.download('averaged_perceptron_tagger')
+    from nltk import pos_tag
+
+    with open(filtered_amazon_review_word_dict_loc) as f:
+        filtered_keywords = f.read().splitlines()
+
+    keywords_noNN = [x for x in filtered_keywords if pos_tag([x])[0][1] != 'NN']
+    keywords_to_write = "\n".join(keywords_noNN)
+
+    with open(filtered_amazon_review_word_dict_noNN_loc, 'a') as keyword_file:
         keyword_file.write(keywords_to_write)

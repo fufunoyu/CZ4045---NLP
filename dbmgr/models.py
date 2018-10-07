@@ -44,8 +44,11 @@ class AmazonReview(models.Model):
         # add spaces between digit and alphabet
         input_text = re.sub(r'\b(\d+)([a-z]+)\b', r'\g<1> \g<2>', input_text, 0)
 
-        # remove number
-        input_text = re.sub(r'\b\d+\b', "", input_text, 0)
+        # remove number, comma-formatted number and float number e.g. 100,000 & 10.12
+        input_text = re.sub(r'\b\d+(,\d+)*(\.\d*)?\b', "", input_text, 0)
+
+        # convert negation word and following word into single token "not good" => not_good
+        input_text = re.sub(r'\b(no|not)\b\s+(\b\w+\b)', "\g<1>_\g<2>", input_text, 0)
 
         # remove stopwords
         tokenizer = RegexpTokenizer(r'\w+')
