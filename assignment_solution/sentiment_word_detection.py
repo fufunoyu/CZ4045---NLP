@@ -3,7 +3,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 from dbmgr.models import AmazonReview
-from settings import amazon_review_word_dict_loc
+from settings import amazon_review_word_dict_loc, english_word_dict_loc, \
+    filtered_amazon_review_word_dict_loc, filtered_amazon_review_word_dict_noNN_loc
 
 
 class KeywordItem():
@@ -41,10 +42,12 @@ class KeywordItem():
 
 def sentiment_word_analysis():
 
-    with open(amazon_review_word_dict_loc) as f:
-        keywords = f.readlines()
-    keywords_dict = dict(zip([x.strip('\n') for x in keywords],
-                                [KeywordItem(x.strip('\n')) for x in keywords]))
+    with open(filtered_amazon_review_word_dict_noNN_loc) as f:
+        keywords = f.read().splitlines()
+
+    keywords_dict = dict(zip([x for x in keywords],
+                                [KeywordItem(x) for x in keywords]))
+
 
     count = 0
     for ar in AmazonReview.objects.exclude(reviewText_noStopWords=None):

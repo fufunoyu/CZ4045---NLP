@@ -21,3 +21,6 @@ DATABASES = {
 
 amazon_review_file_loc = 'dataset/CellPhoneReview.json'
 amazon_review_word_dict_loc = 'dataset/AmazonKeyword.txt'
+english_word_dict_loc = 'dataset/english.txt'
+filtered_amazon_review_word_dict_loc = 'dataset/FilteredAmazonKeyword.txt'
+filtered_amazon_review_word_dict_noNN_loc = 'dataset/FilteredAmazonKeyword_noNN.txt'

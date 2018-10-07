@@ -112,3 +112,5 @@ dmypy.json
 
 dataset/*.json
 cz4045_nlp.db
+
+.vscode/
