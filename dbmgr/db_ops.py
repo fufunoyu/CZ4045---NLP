@@ -5,7 +5,8 @@ from datetime import datetime
 from django.db import transaction
 from .models import AmazonReview
 from settings import amazon_review_word_dict_loc, english_word_dict_loc, \
-    filtered_amazon_review_word_dict_loc, filtered_amazon_review_word_dict_noNN_loc
+    filtered_amazon_review_word_dict_loc, filtered_amazon_review_word_dict_noNN_loc, \
+    amazon_review_file_loc
 
 
 def init_amazon_review_db():

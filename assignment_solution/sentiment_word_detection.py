@@ -21,13 +21,14 @@ class KeywordItem():
     def __str__(self):
         return self.keyword
 
-    def set_word_sentiment(self):
+    def set_word_sentiment(self, numPosReview, numNegReview):
         if self.numReviewMentioned != 0:
             self.sentiment = self.totalScore / self.numReviewMentioned
 
         # rare words are penalized on their impact to final sentiment value
         # self.adjustedSentiment = ((2 / (1 + math.exp(-1 * self.numReviewMentioned))) - 1) * self.sentiment
-        self.adjustedSentiment = self.sentiment * (self.numPosMentioned / self.numNegMentioned)
+        self.adjustedSentiment = self.sentiment * ((self.numPosMentioned / numPosReview) / (self.numNegMentioned / numNegReview))
+        # self.adjustedSentiment = self.sentiment * ((self.numPosMentioned) / (self.numNegMentioned))
 
     def update_keyword_statistics(self, amazonReview):
         self.numReviewMentioned += 1
@@ -49,6 +50,9 @@ def sentiment_word_analysis():
                                 [KeywordItem(x) for x in keywords]))
 
 
+    numPosReview = 0
+    numNegReview = 0
+
     count = 0
     for ar in AmazonReview.objects.exclude(reviewText_noStopWords=None):
         reviewTextKeywordsList = (ar.reviewText_noStopWords).split()
@@ -56,12 +60,20 @@ def sentiment_word_analysis():
             if word in keywords_dict:
                 keywords_dict[word].update_keyword_statistics(ar)
 
+        if float(ar.overall) >= 3:
+            numPosReview += 1
+        if float(ar.overall) <= 2:
+            numNegReview += 1
+
         count += 1
         if count % 10000 == 0:
             print(str(count) + ' done')
 
+    print("pos: ", numPosReview)
+    print("neg: ", numNegReview)
+
     for _, keywordItem in keywords_dict.items():
-        keywordItem.set_word_sentiment()
+        keywordItem.set_word_sentiment(numPosReview=numPosReview, numNegReview=numNegReview)
 
     # sort by adjusted sentiment
     sorted_keywordItem = sorted(keywords_dict.items(), key=lambda kv: kv[1].adjustedSentiment, reverse=True)
