@@ -11,7 +11,7 @@ class AmazonReview(models.Model):
     reviewerID = models.TextField()
     asin = models.TextField()
     reviewText = models.TextField()
-    overall = models.DecimalField(max_digits=3, decimal_places=2) 
+    overall = models.DecimalField(max_digits=3, decimal_places=2)
     summary = models.TextField()
     unixReviewTime = models.BigIntegerField()
     reviewTime = models.DateField()

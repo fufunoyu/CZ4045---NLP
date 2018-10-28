@@ -19,6 +19,7 @@ DATABASES = {
     }
 }
 
+sample_review_file_loc = 'dataset/SampleReview.json'
 amazon_review_file_loc = 'dataset/CellPhoneReview.json'
 amazon_review_word_dict_loc = 'dataset/AmazonKeyword.txt'
 english_word_dict_loc = 'dataset/english.txt'

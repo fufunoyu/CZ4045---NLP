@@ -1,0 +1,2 @@
+from settings import sample_review_file_loc, amazon_review_file_loc
+
