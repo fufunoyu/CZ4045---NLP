@@ -58,7 +58,7 @@ def transform_amazon_review_db():
 
 
 def init_amazon_keyword_dictionary():
-    """ build twitter keyword dictionary from text2 feed """
+    """ build amazon keyword dictionary from review """
 
     amazonReview = AmazonReview.objects.exclude(reviewText_noStopWords=None)
     count = 0
