@@ -28,7 +28,8 @@ def extract_top_20_from_reviews():
 	c = Counter()
 	amazonReviewDF = pd.read_json(amazon_review_file_loc, lines=True)
 	for index, d in amazonReviewDF.iterrows():
-		extract_np(c, d.reviewText)
+		input_data = d.reviewText + " " + d.summary
+		extract_np(c, input_data)
 		if index%100 == 0:
 			print("\rfinished %d iterations" %index, end="")
 	
@@ -63,13 +64,17 @@ for part 2: we want adjectives cause they are more representative
 
 def extract_np(c, data):
 	#refine the grammar?
+	# grammar = r"""
+	#     NP: {<PDT|DT>+<JJ|JJR|JJS>+<NN|NNS|NNP|NNPS>+}
+	#         # {<NN|NNS|NNP|NNPS>+}
+	# """
 	grammar = r"""
-		NP: {<PDT|DT>+<JJ|JJR|JJS>+<NN|NNS|NNP|NNPS>+}
-			# {<NN|NNS|NNP|NNPS>+}
+		NBAR: {<NN.*|JJ.*>+<NN.*>}
+		NP: {<NBAR>}
+			{<NBAR><IN><NBAR>}
 	"""
 	
 	cp = RegexpParser(grammar)
-
 	text = word_tokenize(data)
 	sentence = pos_tag(text)
 	result = []
@@ -79,14 +84,17 @@ def extract_np(c, data):
 	# parsed_sentence.draw()
 	for np in clean_np(parsed_sentence):
 		result.append(np)
-	
-
-	lemmatizer = WordNetLemmatizer()
 	# print("\nreview text is: {}".format(data))
 	# print("\nbefore lowercase and lemmatization: {}".format(result))
-	result = [str.lower(r) for r in result]
-	result = [lemmatizer.lemmatize(r) for r in result]
-	c.update(result)
+	c.update(lower_and_lemma(result))
+
+def lower_and_lemma(phrases):
+	lemmatizer = WordNetLemmatizer()
+	result = []
+	for phrase in phrases:
+		phrase = str.lower(phrase)
+		result.append(' '.join(lemmatizer.lemmatize(p) for p in phrase.split()))
+	return result
 
 def clean_np(parsed_sentence):
 	for subtree in parsed_sentence.subtrees():
