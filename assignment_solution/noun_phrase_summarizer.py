@@ -1,35 +1,47 @@
-from dbmgr.models import AmazonReview
+from collections import Counter
 from nltk import RegexpParser, word_tokenize, pos_tag
 from nltk.stem import WordNetLemmatizer
 # from nltk.corpus import conll2000
-from collections import Counter
+import pandas as pd
+
+from settings import amazon_review_file_loc
+
+"""
+from assignment_solution.noun_phrase_summarizer import sandbox
+sandbox()
+"""
+
 
 def sandbox():
 	c = Counter()
-	data = AmazonReview.objects.filter(asin='B005SUHPO6')[4:5]
-	for index, d in enumerate(data):
+	amazonReviewDF = pd.read_json(amazon_review_file_loc, lines=True)
+	df = amazonReviewDF.loc[amazonReviewDF.asin=='B005SUHPO6']
+	for index, d in df.iterrows():
 		extract_np(c, d.reviewText)
 		if index%100 == 0:
 			print("\rfinished %d iterations" %index, end="") 
-	
+
 	print("\n {}".format(c.most_common(20)))
+
 
 def extract_top_20_from_reviews():
 	c = Counter()
-	data = AmazonReview.objects.all()
-	for index, d in enumerate(data):
+	amazonReviewDF = pd.read_json(amazon_review_file_loc, lines=True)
+	for index, d in amazonReviewDF.iterrows():
 		extract_np(c, d.reviewText)
 		if index%100 == 0:
-			print("\rfinished %d iterations" %index, end="") 
+			print("\rfinished %d iterations" %index, end="")
 	
 	print("\n {}".format(c.most_common(20)))
 
 def repr_np_from_3_popular_products():
+	amazonReviewDF = pd.read_json(amazon_review_file_loc, lines=True)
 	pop_products = ['B005SUHPO6','B0042FV2SI','B008OHNZI0']
 	for product in pop_products:
 		c = Counter()
-		data = AmazonReview.objects.filter(asin=product)
-		for index, d in enumerate(data):
+		
+		df = amazonReviewDF.loc[amazonReviewDF.asin==product]
+		for index, d in df.iterrows():
 			extract_np(c, d.reviewText)
 			if index % 100 == 0:
 				print("\rjust finished {} iterations".format(index), end="")
@@ -52,10 +64,10 @@ for part 2: we want adjectives cause they are more representative
 def extract_np(c, data):
 	#refine the grammar?
 	grammar = r"""
-        NP: {<PDT|DT>+<JJ|JJR|JJS>+<NN|NNS|NNP|NNPS>+}
-            # {<NN|NNS|NNP|NNPS>+}
-    """
-    
+		NP: {<PDT|DT>+<JJ|JJR|JJS>+<NN|NNS|NNP|NNPS>+}
+			# {<NN|NNS|NNP|NNPS>+}
+	"""
+	
 	cp = RegexpParser(grammar)
 
 	text = word_tokenize(data)
