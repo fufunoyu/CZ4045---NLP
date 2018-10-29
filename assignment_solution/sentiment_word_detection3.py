@@ -1,3 +1,6 @@
+import sys, os
+sys.path.insert(1, os.path.join(sys.path[0], '..'))
+
 import inspect
 import math
 import matplotlib.pyplot as plt
@@ -13,9 +16,6 @@ from settings import sample_review_file_loc, amazon_review_file_loc, \
     amazon_review_word_dict_loc, english_word_dict_loc, \
     filtered_amazon_review_word_dict_loc, filtered_amazon_review_word_dict_noNN_loc, \
     clean_amazon_review_file_loc
-
-import concurrent.futures
-import multiprocessing
 
 """
 from assignment_solution.sentiment_word_detection3 import main
@@ -74,17 +74,15 @@ def sentiment_word_analysis(amazonReview):
     numNegReview = 0
 
     for _, x in amazonReview.iterrows():
-        summaryKeywordsList = (x.summary).split()
+        summaryKeywordsList = str(x.summary).split()
         for word in summaryKeywordsList:
             if word in keywords_dict:
                 keywords_dict[word].update_keyword_statistics(x)
-
         if float(x.overall) >= 3:
             numPosReview += 1
         if float(x.overall) <= 2:
             numNegReview += 1
-
-        print_iteration_progress(inspect.stack()[0][3], x)
+        print_iteration_progress('sentiment_word_analysis', x)
 
     print("pos: ", numPosReview)
     print("neg: ", numNegReview)
@@ -171,7 +169,7 @@ def clean_amazon_review_df(df):
         filtered_words = [word for word in words_list_noNN if word not in stopwords.words('english')]
 
         x.summary = " ".join(filtered_words)
-        print_iteration_progress(inspect.stack()[0][3], x)
+        print_iteration_progress('clean_review_text', x)
 
         return x
 
@@ -185,8 +183,8 @@ def build_amazon_keyword_dictionary(df):
 
     keyword_list = set()
     for _, x in df.iterrows():
-        keyword_list = keyword_list | set(x.summary.split())
-        print_iteration_progress(inspect.stack()[0][3], x)
+        keyword_list = keyword_list | set(str(x.summary).split())
+        print_iteration_progress('build_amazon_keyword_dictionary', x)
 
     keyword_list = list(keyword_list)
     keyword_list = sorted(keyword_list)
