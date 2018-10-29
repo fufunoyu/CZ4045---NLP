@@ -1,11 +1,20 @@
 import math
 import matplotlib.pyplot as plt
+import nltk
 import numpy as np
+import pandas as pd
+import re
 
-from dbmgr.models import AmazonReview
-from settings import amazon_review_word_dict_loc, english_word_dict_loc, \
-    filtered_amazon_review_word_dict_loc, filtered_amazon_review_word_dict_noNN_loc
+from decorators import log_time_taken
+from nltk.corpus import stopwords
+from nltk.tokenize import RegexpTokenizer
+from .__settings import sample_review_file_loc, amazon_review_file_loc, \
+    amazon_review_word_dict_loc, clean_amazon_review_file_loc
 
+"""
+from assignment_solution.sentiment_word_detection import main
+main()
+"""
 
 class KeywordItem():
     def __init__(self, keyword):
@@ -41,33 +50,33 @@ class KeywordItem():
             self.numNegMentioned += 1
 
 
-def sentiment_word_analysis():
+def print_iteration_progress(function_name, x):
 
-    with open(filtered_amazon_review_word_dict_noNN_loc) as f:
+    if x.name % 1000 == 0:
+        print("{}: {} of 190919 done".format(function_name, x.name))
+
+
+def sentiment_word_analysis(amazonReview):
+
+    with open(amazon_review_word_dict_loc) as f:
         keywords = f.read().splitlines()
 
     keywords_dict = dict(zip([x for x in keywords],
                                 [KeywordItem(x) for x in keywords]))
 
-
     numPosReview = 0
     numNegReview = 0
 
-    count = 0
-    for ar in AmazonReview.objects.exclude(reviewText_noStopWords=None):
-        reviewTextKeywordsList = (ar.reviewText_noStopWords).split()
-        for word in reviewTextKeywordsList:
+    for _, x in amazonReview.iterrows():
+        summaryKeywordsList = str(x.summary).split()
+        for word in summaryKeywordsList:
             if word in keywords_dict:
-                keywords_dict[word].update_keyword_statistics(ar)
-
-        if float(ar.overall) >= 3:
+                keywords_dict[word].update_keyword_statistics(x)
+        if float(x.overall) >= 3:
             numPosReview += 1
-        if float(ar.overall) <= 2:
+        if float(x.overall) <= 2:
             numNegReview += 1
-
-        count += 1
-        if count % 10000 == 0:
-            print(str(count) + ' done')
+        print_iteration_progress('sentiment_word_analysis', x)
 
     print("pos: ", numPosReview)
     print("neg: ", numNegReview)
@@ -126,3 +135,71 @@ def sentiment_word_analysis():
     ax.legend()
 
     plt.show()
+
+
+def clean_amazon_review_df(df):
+    """ clean dataframe of amazon review """
+
+    def clean_review_text(x):
+        text = x.summary.lower()
+
+        # replace url with http_url token
+        regex = r"https?\:\/\/[0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*(:(0-9)*)*(\/?)([a-zA-Z0-9\-\.\?\,\'\/\\\+&amp;%\$#_]*)?"
+        text = re.sub(regex, "http_url", text, 0)
+
+        # add spaces between digit and alphabet
+        text = re.sub(r'\b(\d+)([a-z]+)\b', r'\g<1> \g<2>', text, 0)
+
+        # convert negation word and following word into single token "not good" => not_good
+        text = re.sub(r'\b(no|not)\b\s+(\b\w+\b)', "\g<1>_\g<2>", text, 0)
+
+        # remove stopwords
+        tokenizer = RegexpTokenizer(r'\w+')
+        word_list = tokenizer.tokenize(text)
+
+        # sentiment analysis does not account for noun, numbers, stopwords
+        words_list_noNN = [x[0] for x in nltk.pos_tag(word_list) if (x[1] != 'NN' and x[1] != 'CD') ]
+        filtered_words = [word for word in words_list_noNN if word not in stopwords.words('english')]
+
+        x.summary = " ".join(filtered_words)
+        print_iteration_progress('clean_review_text', x)
+
+        return x
+
+    cleaned_df = df.apply(lambda x: clean_review_text(x), axis=1)
+    del df
+    return cleaned_df
+
+
+def build_amazon_keyword_dictionary(df):
+    """ build amazon keyword dictionary from review text """
+
+    keyword_list = set()
+    for _, x in df.iterrows():
+        keyword_list = keyword_list | set(str(x.summary).split())
+        print_iteration_progress('build_amazon_keyword_dictionary', x)
+
+    keyword_list = list(keyword_list)
+    keyword_list = sorted(keyword_list)
+    keywords_to_write = "\n".join(keyword_list)
+
+    # replace words starting with numbers
+    keywords_to_write = re.sub(re.compile(r'^\b\d+.*\b\n', re.MULTILINE), "", keywords_to_write)
+
+    with open(amazon_review_word_dict_loc, 'a') as keyword_file:
+        keyword_file.write(keywords_to_write)
+
+
+def main():
+
+    # clean amazon review text of stopwords
+    try:
+        df = pd.read_csv(clean_amazon_review_file_loc)
+    except FileNotFoundError as e:
+        df = pd.read_json(amazon_review_file_loc, lines=True)
+        df = clean_amazon_review_df(df)
+        df.to_csv(clean_amazon_review_file_loc)
+
+    # create keyword dictionary for sentiment analysis
+    build_amazon_keyword_dictionary(df)
+    sentiment_word_analysis(df)

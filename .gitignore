@@ -111,6 +111,7 @@ venv.bak/
 dmypy.json
 
 dataset/*.json
+dataset/*.csv
 cz4045_nlp.db
 
 .vscode/

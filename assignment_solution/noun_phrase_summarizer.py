@@ -4,7 +4,7 @@ from nltk.stem import WordNetLemmatizer
 # from nltk.corpus import conll2000
 import pandas as pd
 
-from settings import amazon_review_file_loc
+from .__settings import amazon_review_file_loc
 
 """
 from assignment_solution.noun_phrase_summarizer import sandbox
