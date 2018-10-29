@@ -1,6 +1,7 @@
 import inspect
 import math
 import matplotlib.pyplot as plt
+import nltk
 import numpy as np
 import pandas as pd
 import re
@@ -10,15 +11,16 @@ from nltk.corpus import stopwords
 from nltk.tokenize import RegexpTokenizer
 from settings import sample_review_file_loc, amazon_review_file_loc, \
     amazon_review_word_dict_loc, english_word_dict_loc, \
-    filtered_amazon_review_word_dict_loc, filtered_amazon_review_word_dict_noNN_loc
+    filtered_amazon_review_word_dict_loc, filtered_amazon_review_word_dict_noNN_loc, \
+    clean_amazon_review_file_loc
 
+import concurrent.futures
+import multiprocessing
 
 """
-from assignment_solution.sentiment_word_detection2 import main
+from assignment_solution.sentiment_word_detection3 import main
 main()
 """
-
-
 class KeywordItem():
     def __init__(self, keyword):
         self.keyword = keyword
@@ -61,7 +63,7 @@ def print_iteration_progress(function_name, x):
 
 def sentiment_word_analysis(amazonReview):
 
-    with open(filtered_amazon_review_word_dict_noNN_loc) as f:
+    with open(amazon_review_word_dict_loc) as f:
         keywords = f.read().splitlines()
 
     keywords_dict = dict(zip([x for x in keywords],
@@ -72,8 +74,8 @@ def sentiment_word_analysis(amazonReview):
     numNegReview = 0
 
     for _, x in amazonReview.iterrows():
-        reviewTextKeywordsList = (x.reviewText).split()
-        for word in reviewTextKeywordsList:
+        summaryKeywordsList = (x.summary).split()
+        for word in summaryKeywordsList:
             if word in keywords_dict:
                 keywords_dict[word].update_keyword_statistics(x)
 
@@ -148,17 +150,14 @@ def clean_amazon_review_df(df):
 
     # @log_time_taken
     def clean_review_text(x):
-        text = x.reviewText.lower()
+        text = x.summary.lower()
 
-        # remove url
+        # replace url with http_url token
         regex = r"https?\:\/\/[0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*(:(0-9)*)*(\/?)([a-zA-Z0-9\-\.\?\,\'\/\\\+&amp;%\$#_]*)?"
-        text = re.sub(regex, "", text, 0)
+        text = re.sub(regex, "http_url", text, 0)
 
         # add spaces between digit and alphabet
         text = re.sub(r'\b(\d+)([a-z]+)\b', r'\g<1> \g<2>', text, 0)
-
-        # remove number, comma-formatted number and float number e.g. 100,000 & 10.12
-        text = re.sub(r'\b\d+(,\d+)*(\.\d*)?\b', "", text, 0)
 
         # convert negation word and following word into single token "not good" => not_good
         text = re.sub(r'\b(no|not)\b\s+(\b\w+\b)', "\g<1>_\g<2>", text, 0)
@@ -166,9 +165,12 @@ def clean_amazon_review_df(df):
         # remove stopwords
         tokenizer = RegexpTokenizer(r'\w+')
         word_list = tokenizer.tokenize(text)
-        filtered_words = [word for word in word_list if word not in stopwords.words('english')]
 
-        x.reviewText = " ".join(filtered_words)
+        # sentiment analysis does not account for noun, numbers, stopwords
+        words_list_noNN = [x[0] for x in nltk.pos_tag(word_list) if (x[1] != 'NN' and x[1] != 'CD') ]
+        filtered_words = [word for word in words_list_noNN if word not in stopwords.words('english')]
+
+        x.summary = " ".join(filtered_words)
         print_iteration_progress(inspect.stack()[0][3], x)
 
         return x
@@ -183,7 +185,7 @@ def build_amazon_keyword_dictionary(df):
 
     keyword_list = set()
     for _, x in df.iterrows():
-        keyword_list = keyword_list | set(x.reviewText.split())
+        keyword_list = keyword_list | set(x.summary.split())
         print_iteration_progress(inspect.stack()[0][3], x)
 
     keyword_list = list(keyword_list)
@@ -232,10 +234,16 @@ def build_filtered_amazon_keyword_dictionary_noNN():
 def main():
 
     # clean amazon review text of stopwords
-    df = pd.read_json(amazon_review_file_loc, lines=True)
-    df = clean_amazon_review_df(df)
+    try:
+        df = pd.read_csv(clean_amazon_review_file_loc)
+    except FileNotFoundError as e:
+        df = pd.read_json(amazon_review_file_loc, lines=True)
+        df = clean_amazon_review_df(df)
+        df.to_csv(clean_amazon_review_file_loc)
 
     # create keyword dictionary for sentiment analysis
     build_amazon_keyword_dictionary(df)
-    build_filtered_amazon_keyword_dictionary()
-    build_filtered_amazon_keyword_dictionary_noNN()
+    # build_filtered_amazon_keyword_dictionary()
+    # build_filtered_amazon_keyword_dictionary_noNN()
+
+    sentiment_word_analysis(df)
