@@ -1,16 +1,23 @@
 from dbmgr.models import AmazonReview
-from nltk import RegexpParser, word_tokenize, pos_tag
+from nltk import RegexpParser, word_tokenize, sent_tokenize, pos_tag_sents
+from nltk.corpus import conll2000
 from collections import Counter
+
+def sandbox():
+	c = Counter()
+	teststr = "this is a very hairy dog with teeth that are very large. This is sentence number two. How about question marks? And a sentence with fullstops without spaces.Like this sentence."
+	extract_np(c, teststr)
+	print(c.most_common(10))
 
 def extract_top_20_from_reviews():
 	c = Counter()
-	data = AmazonReview.objects.all()[1000:2000]
+	data = AmazonReview.objects.all()
 	for index, d in enumerate(data):
 		extract_np(c, d.reviewText)
 		if index%100 == 0:
 			print("\rfinished %d iterations" %index, end="") 
 	
-	print(c.most_common(20))
+	print("\n {}".format(c.most_common(20)))
 
 def repr_np_from_3_popular_products():
 	pop_products = ['B005SUHPO6','B0042FV2SI','B008OHNZI0']
@@ -22,7 +29,16 @@ def repr_np_from_3_popular_products():
 			if index % 100 == 0:
 				print("\rjust finished {} iterations".format(index), end="")
 	
-		print("10 representative noun phrases for {} are: {}".format(product, c.most_common(10)))
+		print("\n10 representative noun phrases for {} are: {}".format(product, c.most_common(10)))
+
+"""
+a.
+1. clean the words
+2. tf-idf
+3. stem and count
+
+b. try training a classifier
+"""
 
 def extract_np(c, data):
 	#refine the grammar?
@@ -33,16 +49,16 @@ def extract_np(c, data):
     
 	cp = RegexpParser(grammar)
 
-	text = word_tokenize(data)
-	sentence = pos_tag(text)
-    
-	parsed_sentence = cp.parse(sentence)
-	# Clearer visuals for debugging
-	# print(parsed_sentence)
-	# parsed_sentence.draw()
+	text = [word_tokenize(t) for t in sent_tokenize(data)]
+	parsed_sentenced = pos_tag_sents(text)
 	result = []
-	for np in clean_np(parsed_sentence):
-		result.append(np)
+	for sentence in parsed_sentenced:
+		parsed_sentence = cp.parse(sentence)
+		# # Clearer visuals for debugging
+		print(parsed_sentence)
+		# parsed_sentence.draw()
+		for np in clean_np(parsed_sentence):
+			result.append(np)
 	
 	c.update(result)
 
