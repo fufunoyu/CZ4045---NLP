@@ -3,14 +3,40 @@ from nltk import RegexpParser, word_tokenize, pos_tag
 from nltk.stem import WordNetLemmatizer
 # from nltk.corpus import conll2000
 import pandas as pd
-
+import re
+import html.parser
 from settings import amazon_review_file_loc
 
 """
 from assignment_solution.noun_phrase_summarizer import sandbox
 sandbox()
+
+from assignment_solution import noun_phrase_summarizer as nps
+nps.clean_dataset()
 """
 
+def clean_dataset():
+	amazonReviewDF = pd.read_json(amazon_review_file_loc, lines=True)
+	
+	col_label = amazonReviewDF.columns.get_loc("reviewText") 
+	url_regex = r"https?\:\/\/[0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*(:(0-9)*)*(\/?)([a-zA-Z0-9\-\.\?\,\'\/\\\+&amp;%\$#_]*)?"
+
+	# print("before")
+	# print(amazonReviewDF.iloc[1,2])
+	count = 0
+	for index, d in amazonReviewDF.iterrows():
+		
+		review = d.reviewText
+		review_lower = review.lower()
+		review_no_html_code = html.parser.unescape(review_lower)
+		review_no_url = re.sub(url_regex, '<URL>', review_no_html_code)
+
+		amazonReviewDF.iloc[count,col_label] = review_no_url
+		count += 1
+	# print('after')
+	# print(amazonReviewDF.iloc[1,2])
+
+	return amazonReviewDF
 
 def sandbox():
 	c = Counter()
