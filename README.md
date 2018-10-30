@@ -16,22 +16,23 @@ The review dataset file are omitted to save space in project directory. Please p
 
 ## Project Installation Guide
 Project setup is as simple as the following 2 steps 
-#### 1. Install package requirements
+#### Install package requirements
 The following command will install the required python packages.
 ```
         $ pip install -r requirements.txt
 ```
 
-#### 2. Run migrations to create the sqlite3 database
-The purpose of using the database instead of operating directly on the `.json` is to speed up retrieval and query of the dataset. Execute the following command to create the database.
-```
-        $ python manage.py migrate
-```
-
 ## Usage guide
 This section describes the steps or commands needed for running the code that solves the problems listed in the project assignment.
-#### Populate the database
-The project uses sqlite3 db engine. Once the sqlite3 database has been created and the `CellPhoneReview.json` placed in the `dataset/` folder, execute the following command to populate the sqlite3 database with amazon review records.
+
+#### 1. Dataset Analysis
+
+#### 2. Noun Phrase Summarizer
+
+#### 3. Sentiment Word Detection
+Once the `CellPhoneReview.json` has been placed in the `dataset/` folder, execute the following command to start generating the top 20 positive and negative words.
 ```
-        $ python main.py initdb
+        $ python main.py sentiment
 ``` 
+
+#### 4. Application

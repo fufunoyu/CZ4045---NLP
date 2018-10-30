@@ -35,11 +35,7 @@ class KeywordItem():
     def set_word_sentiment(self, numPosReview, numNegReview):
         if self.numReviewMentioned != 0:
             self.sentiment = self.totalScore / self.numReviewMentioned
-
-        # rare words are penalized on their impact to final sentiment value
-        # self.adjustedSentiment = ((2 / (1 + math.exp(-1 * self.numReviewMentioned))) - 1) * self.sentiment
         self.adjustedSentiment = self.sentiment * ((self.numPosMentioned / numPosReview) / (self.numNegMentioned / numNegReview))
-        # self.adjustedSentiment = self.sentiment * ((self.numPosMentioned) / (self.numNegMentioned))
 
     def update_keyword_statistics(self, amazonReview):
         self.numReviewMentioned += 1
@@ -127,7 +123,7 @@ def sentiment_word_analysis(amazonReview):
 
     plt_y_pos = np.arange(len(plt_label))
     ax.barh(plt_y_pos+plt_width/2, plt_value_adjustedSentiment, plt_width, align='center', color='IndianRed', ecolor='black', label='adjusted sentiment')
-    ax.barh(plt_y_pos-plt_width/2, plt_value_Sentiment, plt_width, align='center', color='SkyBlue', ecolor='black', label='sentiment')
+    # ax.barh(plt_y_pos-plt_width/2, plt_value_Sentiment, plt_width, align='center', color='SkyBlue', ecolor='black', label='sentiment')
 
     ax.set_yticks(plt_y_pos)
     ax.set_yticklabels(plt_label)
@@ -161,7 +157,11 @@ def clean_amazon_review_df(df):
 
         # sentiment analysis does not account for noun, numbers, stopwords
         words_list_noNN = [x[0] for x in nltk.pos_tag(word_list) if (x[1] != 'NN' and x[1] != 'CD') ]
-        filtered_words = [word for word in words_list_noNN if word not in stopwords.words('english')]
+
+        stopwords_list = stopwords.words('english')
+        stopwords_list = stopwords_list + ['not_'+x for x in stopwords.words('english')]
+        stopwords_list = stopwords_list + ['no_'+x for x in stopwords.words('english')]
+        filtered_words = [word for word in words_list_noNN if word not in stopwords_list]
 
         x.summary = " ".join(filtered_words)
         print_iteration_progress('clean_summary_text', x)
