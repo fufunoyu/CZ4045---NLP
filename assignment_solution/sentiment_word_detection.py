@@ -140,7 +140,7 @@ def sentiment_word_analysis(amazonReview):
 def clean_amazon_review_df(df):
     """ clean dataframe of amazon review """
 
-    def clean_review_text(x):
+    def clean_summary_text(x):
         text = x.summary.lower()
 
         # replace url with http_url token
@@ -162,11 +162,11 @@ def clean_amazon_review_df(df):
         filtered_words = [word for word in words_list_noNN if word not in stopwords.words('english')]
 
         x.summary = " ".join(filtered_words)
-        print_iteration_progress('clean_review_text', x)
+        print_iteration_progress('clean_summary_text', x)
 
         return x
 
-    cleaned_df = df.apply(lambda x: clean_review_text(x), axis=1)
+    cleaned_df = df.apply(lambda x: clean_summary_text(x), axis=1)
     del df
     return cleaned_df
 
