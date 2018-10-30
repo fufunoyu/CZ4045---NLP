@@ -1,5 +1,3 @@
-import os
-
 sample_review_file_loc = 'dataset/SampleReview.json'
 amazon_review_file_loc = 'dataset/CellPhoneReview.json'
 clean_amazon_review_file_loc = 'dataset/CleanCellPhoneReview.csv'

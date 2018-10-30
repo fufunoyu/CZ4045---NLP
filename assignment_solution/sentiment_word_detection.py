@@ -3,13 +3,15 @@ import matplotlib.pyplot as plt
 import nltk
 import numpy as np
 import pandas as pd
+import os.path
 import re
 
-from decorators import log_time_taken
 from nltk.corpus import stopwords
 from nltk.tokenize import RegexpTokenizer
+
 from .__settings import sample_review_file_loc, amazon_review_file_loc, \
     amazon_review_word_dict_loc, clean_amazon_review_file_loc
+
 
 """
 from assignment_solution.sentiment_word_detection import main
@@ -201,5 +203,7 @@ def main():
         df.to_csv(clean_amazon_review_file_loc)
 
     # create keyword dictionary for sentiment analysis
-    build_amazon_keyword_dictionary(df)
+    if not os.path.isfile(amazon_review_word_dict_loc):
+        build_amazon_keyword_dictionary(df)
+
     sentiment_word_analysis(df)
