@@ -35,7 +35,7 @@ class KeywordItem():
     def set_word_sentiment(self, numPosReview, numNegReview):
         if self.numReviewMentioned != 0:
             self.sentiment = self.totalScore / self.numReviewMentioned
-        self.adjustedSentiment = self.sentiment * ((self.numPosMentioned / numPosReview) / (self.numNegMentioned / numNegReview))
+        self.adjustedSentiment = self.sentiment * (self.numPosMentioned / self.numNegMentioned) * (numNegReview / numPosReview)
 
     def update_keyword_statistics(self, amazonReview):
         self.numReviewMentioned += 1
@@ -76,8 +76,8 @@ def sentiment_word_analysis(amazonReview):
             numNegReview += 1
         print_iteration_progress('sentiment_word_analysis', x)
 
-    print("pos: ", numPosReview)
-    print("neg: ", numNegReview)
+    print("total pos reviews: {}".format(numPosReview))
+    print("total neg reviews: {}".format(numNegReview))
 
     for _, keywordItem in keywords_dict.items():
         keywordItem.set_word_sentiment(numPosReview=numPosReview, numNegReview=numNegReview)
@@ -86,6 +86,15 @@ def sentiment_word_analysis(amazonReview):
     sorted_keywordItem = sorted(keywords_dict.items(), key=lambda kv: kv[1].adjustedSentiment, reverse=True)
     positive_keyword_top20 = [x[1] for x in sorted_keywordItem[:20]]
     negative_keyword_top20 = [x[1] for x in sorted_keywordItem[-20:][::-1]]
+
+    print()
+    print("[Top 20 positive words]")
+    [print("word: {}, adjusted_sentiment: {}".format(x.keyword, x.adjustedSentiment)) for x in positive_keyword_top20]
+    print("=================\n")
+
+    print("[Top 20 negative words]")
+    [print("word: {}, adjusted_sentiment: {}".format(x.keyword, x.adjustedSentiment)) for x in negative_keyword_top20]
+    print("=================\n")
 
     # plot positive keyword statistics
     plt.rcdefaults()
