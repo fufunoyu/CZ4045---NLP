@@ -1,20 +1,29 @@
 from collections import Counter
 from nltk import RegexpParser, word_tokenize, pos_tag
 from nltk.stem import WordNetLemmatizer
-# from nltk.corpus import conll2000
+
 import pandas as pd
-import tqdm as tqdm
+import tqdm
 import re
 import html.parser
 import math
-from __settings import amazon_review_file_loc
-"""
-from assignment_solution.noun_phrase_summarizer import sandbox
-sandbox()
+from .chunktagger import ConsecutiveNPChunker
+from .__settings import amazon_review_file_loc
 
-from assignment_solution import noun_phrase_summarizer as nps
-nps.clean_dataset()
-"""
+# grammar = r"""
+	#     NP: {<PDT|DT>+<JJ|JJR|JJS>+<NN|NNS|NNP|NNPS>+}
+	#         # {<NN|NNS|NNP|NNPS>+}
+	# """
+grammar = r"""
+		NBAR: {<NN.*|JJ.*>+<NN.*>}
+		NP: {<NBAR>}
+			{<NBAR><IN><NBAR>}
+		"""
+regex_parser = RegexpParser(grammar)
+
+chunk_parser = ConsecutiveNPChunker()
+# chunk_parser.train_and_save() # only run this if the chunktagger file changes
+chunk_parser.load()
 
 def clean_dataset():
 	amazonReviewDF = pd.read_json(amazon_review_file_loc, lines=True)
@@ -41,99 +50,36 @@ def clean_dataset():
 
 def extract_top_20_from_reviews(amazonReviewDF):
 	c = Counter()
-	for index, d in amazonReviewDF.iterrows():
+	parser = regex_parser if mode == "regexp" else chunk_parser
+	for index, d in tqdm.tqdm(amazonReviewDF.iterrows()):
 		input_data = d.reviewText + " " + d.summary
-		extract_np(c, input_data)
+		extract_np(c, input_data, parser)
 		if index%100 == 0:
 			print("\rfinished %d iterations" %index, end="")
 	
 	print("\n {}".format(c.most_common(20)))
 
-def top_3(amazonReviewDF):
+def top_3(amazonReviewDF, mode="regexp"):
 	pop_products = ['B005SUHPO6','B0042FV2SI','B008OHNZI0']
+	parser = regex_parser if mode == "regexp" else chunk_parser
 	for product in pop_products:
 		c = Counter()
-		
 		df = amazonReviewDF.loc[amazonReviewDF.asin==product]
-		for index, d in tqdm(df.iterrows()):
+		for index, d in tqdm.tqdm(df.iterrows()):
 			input_data = d.reviewText + " " + d.summary
-			extract_np(c, input_data)
+			extract_np(c, input_data, parser)				
 		print("\n10 representative noun phrases for {} are: {}".format(product, c.most_common(10)))
 
-def tfidf_top_3():
-	amazonReviewDF = pd.read_json(amazon_review_file_loc, lines=True)
-	np_to_products = dict()
-	c = Counter()
-	products = ['B005SUHPO6','B0042FV2SI','B008OHNZI0']
-	for product in products:		
-		df = amazonReviewDF.loc[amazonReviewDF.asin==product]
-		for index, d in df.iterrows():
-			extract_np(c, d.reviewText)
-		for noun_phrase in set(c.elements()):
-			try:
-				np_to_products[noun_phrase] += 1
-			except KeyError:
-				np_to_products[noun_phrase] = 0
-
-	for noun_phrase in c.elements():
-		c[noun_phrase] = c[noun_phrase] * math.log(len(products)/1+np_to_products[noun_phrase])
-
-	print(c.most_common(20))
-"""
-a.
-1. tf-idf
-2. remove repeated words
-
-b. try training a classifier
-"""
-
-"""
-for part 1: we want to have a slacker rule - NBAR: {<NN.*|JJ.*>*<NN.*>} NP: {<NBAR>} {<NBAR><IN><NBAR>}
-for part 2: we want adjectives cause they are more representative
-"""
-
-def tfidf_extract_np(data):
-	grammar = r"""
-		NBAR: {<NN.*|JJ.*>+<NN.*>}
-		NP: {<NBAR>}
-			{<NBAR><IN><NBAR>}
-	"""
-	
-	cp = RegexpParser(grammar)
+def extract_np(c, data, parser):	
 	text = word_tokenize(data)
 	sentence = pos_tag(text)
 	result = []
-	parsed_sentence = cp.parse(sentence)
-	for np in clean_np(parsed_sentence):
-		result.append(np)
-	c = Counter()
-	return c.update(lower_and_lemma(result))
-
-def extract_np(c, data):
-	#refine the grammar?
-	# grammar = r"""
-	#     NP: {<PDT|DT>+<JJ|JJR|JJS>+<NN|NNS|NNP|NNPS>+}
-	#         # {<NN|NNS|NNP|NNPS>+}
-	# """
-	grammar = r"""
-		NBAR: {<NN.*|JJ.*>+<NN.*>}
-		NP: {<NBAR>}
-			{<NBAR><IN><NBAR>}
-	"""
-	
-	cp = RegexpParser(grammar)
-	text = word_tokenize(data)
-	sentence = pos_tag(text)
-	result = []
-	parsed_sentence = cp.parse(sentence)
+	parsed_sentence = parser.parse(sentence)
 	# # Clearer visuals for debugging
 	# print(parsed_sentence)
 	# parsed_sentence.draw()
 	for np in clean_np(parsed_sentence):
 		result.append(np)
-	# print("\nreview text is: {}".format(data))
-	# print("\nbefore lowercase and lemmatization: {}".format(result))
-	
 	# This counts number of times the NPs appears in the input data(review + summary) 
 	c.update(lower_and_lemma(result))
 
@@ -150,8 +96,46 @@ def clean_np(parsed_sentence):
 		if subtree.label() == 'NP':
 			yield ' '.join(word for word,tag in subtree.leaves() if not (tag == 'DT' and str.lower(word) in ['the', 'a', 'an', 'these', 'that', 'this', 'those']))
 
-if __name__ == "__main__":
-	data = clean_dataset()
-	extract_top_20_from_reviews(data)
-	# top_3(data)
+# def tfidf_top_3():
+# 	amazonReviewDF = pd.read_json(amazon_review_file_loc, lines=True)
+# 	np_to_products = dict()
+# 	c = Counter()
+# 	products = ['B005SUHPO6','B0042FV2SI','B008OHNZI0']
+# 	for product in products:		
+# 		df = amazonReviewDF.loc[amazonReviewDF.asin==product]
+# 		for index, d in df.iterrows():
+# 			extract_np(c, d.reviewText)
+# 		for noun_phrase in set(c.elements()):
+# 			try:
+# 				np_to_products[noun_phrase] += 1
+# 			except KeyError:
+# 				np_to_products[noun_phrase] = 0
+
+# 	for noun_phrase in c.elements():
+# 		c[noun_phrase] = c[noun_phrase] * math.log(len(products)/1+np_to_products[noun_phrase])
+# def tfidf_extract_np(data):
+	# grammar = r"""
+	# 	NBAR: {<NN.*|JJ.*>+<NN.*>}
+	# 	NP: {<NBAR>}
+	# 		{<NBAR><IN><NBAR>}
+	# """
+	
+	# cp = RegexpParser(grammar)
+	# text = word_tokenize(data)
+	# sentence = pos_tag(text)
+	# result = []
+	# parsed_sentence = cp.parse(sentence)
+	# for np in clean_np(parsed_sentence):
+	# 	result.append(np)
+	# c = Counter()
+	# return c.update(lower_and_lemma(result))
+
+def main():
+	# data = clean_dataset()
+	# extract_top_20_from_reviews(data)
+	data = pd.read_json(amazon_review_file_loc, lines=True)
+	# mode = "chunktagger"
+	mode = "regexp"
+	print("mode is {}".format(mode))
+	top_3(data, mode)
 
