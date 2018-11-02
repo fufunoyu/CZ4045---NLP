@@ -48,7 +48,7 @@ def clean_dataset():
 
 	return amazonReviewDF
 
-def extract_top_20_from_reviews(amazonReviewDF):
+def extract_top_20_from_reviews(amazonReviewDF, mode):
 	c = Counter()
 	parser = regex_parser if mode == "regexp" else chunk_parser
 	for index, d in tqdm.tqdm(amazonReviewDF.iterrows()):
@@ -132,10 +132,11 @@ def clean_np(parsed_sentence):
 
 def main():
 	# data = clean_dataset()
-	# extract_top_20_from_reviews(data)
 	data = pd.read_json(amazon_review_file_loc, lines=True)
-	# mode = "chunktagger"
-	mode = "regexp"
+	mode = "chunktagger"
+	# mode = "regexp"
 	print("mode is {}".format(mode))
 	top_3(data, mode)
+	# extract_top_20_from_reviews(data, mode)
+
 

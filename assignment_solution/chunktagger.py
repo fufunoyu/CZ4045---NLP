@@ -1,7 +1,6 @@
 import nltk
 from nltk.corpus import conll2000
 import pickle
-import tqdm as tqdm
 
 
 def npchunk_features(sentence, i, history):
@@ -9,11 +8,11 @@ def npchunk_features(sentence, i, history):
     if i == 0:
         _, prevpos = "<START>", "<START>"
     else:
-        prevword, prevpos = sentence[i-1]
+        _, prevpos = sentence[i-1]
     if i == len(sentence)-1:
         _, nextpos = "<END>", "<END>"
     else:
-        nextword, nextpos = sentence[i+1]
+        _, nextpos = sentence[i+1]
     return {"pos": pos,
             "word": word,
             "prevpos": prevpos,
@@ -61,7 +60,8 @@ class ConsecutiveNPChunker(nltk.ChunkParserI):
     def train_and_save(self):
         self.tagged_sents = [[((w,t), c) for (w,t,c) in nltk.chunk.tree2conlltags(sent)] for sent in self.train_sents]
         self.tagger = ConsecutiveNPChunkTagger(self.tagged_sents)
-        pickle.dump(self.tagger, open('npchunker.pickle', 'wb')) 
+        pickle.dump(self.tagger, open('npchunker.pickle', 'wb'))
+        print("finished training") 
 
     def load(self):
         self.tagger = pickle.load(open('npchunker.pickle', 'rb'))
