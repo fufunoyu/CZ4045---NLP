@@ -26,7 +26,8 @@ def main(argv):
     for arg in remainders:
 
         if arg == 'analysis':
-            pass
+            from assignment_solution import dataset_analysis
+            dataset_analysis.main()
         elif arg == 'nounphrase':
             from assignment_solution import noun_phrase_summarizer as nps
             nps.main()

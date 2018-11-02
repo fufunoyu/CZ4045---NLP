@@ -19,6 +19,7 @@ abd
 abe
 abilities
 able
+abler
 abolutely
 abound
 abover
@@ -507,7 +508,6 @@ artist
 artistic
 artsy
 ary
-ascend
 asesome
 asexpected
 ashamed
@@ -538,6 +538,7 @@ astonishing
 astonishingly
 astounding
 astro
+astro2
 astro3
 astro3e
 aswesome
@@ -925,6 +926,7 @@ bogus
 bold
 bolkin
 bolse
+bolt
 bona
 bonds
 bones
@@ -1475,7 +1477,6 @@ compaitble
 companies
 companions
 comparable
-compararable
 compare
 compared
 compares
@@ -2007,6 +2008,7 @@ designs
 desing
 desire
 desired
+desirehd
 desires
 desiring
 desk
@@ -2338,6 +2340,7 @@ dumber
 dump
 dunked
 dunno
+duo
 duos
 duped
 duplicates
@@ -2415,6 +2418,7 @@ eats
 eaxactly
 eaxtly
 eays
+eb484659va
 ebay
 ebest
 ec
@@ -3001,6 +3005,7 @@ finishes
 finishing
 finiti
 fintie
+fioo
 fiper
 fir
 fired
@@ -3172,7 +3177,6 @@ frankly
 frastrating
 fraudlent
 fraudulent
-fraught
 fraw
 fray
 frayed
@@ -3325,7 +3329,6 @@ gellin
 gelly
 gels
 gems
-gen
 general
 generally
 generates
@@ -3360,7 +3363,6 @@ gift
 gifted
 gifting
 gifts
-gig
 gigantic
 giid
 gimmick
@@ -3485,7 +3487,6 @@ graphite
 grat
 grate
 grateful
-gravel
 gray
 gread
 greae
@@ -3517,7 +3518,6 @@ gret
 greta
 grew
 grey
-grid
 griendly
 griffin
 grime
@@ -3572,7 +3572,6 @@ guns
 gussets
 guys
 gym
-h
 h2o
 h700
 h710
@@ -4109,6 +4108,7 @@ innards
 inner
 innergie
 innexpensive
+innocell
 innokin
 innovating
 innovations
@@ -4127,6 +4127,7 @@ inserting
 inserts
 inside
 insipio
+inspire
 inspiring
 instaling
 install
@@ -4228,12 +4229,14 @@ iparts
 iph
 iph4s
 iphne
+iphon
 iphone
 iphone3gs
 iphone4
 iphone4s
 iphone5
 iphone5s
+iphonehotpink
 iphoneographers
 iphones
 iphoney
@@ -4370,7 +4373,6 @@ keynote
 keypad
 keys
 kfor
-khz
 kick
 kickin
 kicking
@@ -4531,7 +4533,6 @@ legitimate
 legned
 lego
 lemon
-lenght
 length
 lengths
 lengthy
@@ -4735,7 +4736,6 @@ loses
 losing
 losses
 lost
-lot
 lots
 lotto
 lotus
@@ -4774,6 +4774,7 @@ lows
 loyal
 lphone
 ls
+ls670
 lsited
 lt
 ltd
@@ -4929,7 +4930,6 @@ maybe
 mazda
 mazda3
 mazdaspeed
-mb
 mcgraw
 mean
 meaning
@@ -4995,7 +4995,6 @@ mexico
 mfi
 mh
 mhl
-mhz
 miata
 mic
 mico
@@ -5091,7 +5090,6 @@ mm
 mmm
 mmmm
 mmmmmmmmmmmmmm
-mo
 moar
 mobil
 mobile
@@ -5250,7 +5248,6 @@ navy
 naw
 naysayers
 ncie
-nd
 ne
 near
 nearby
@@ -5356,8 +5353,8 @@ nla
 nn
 nnnh
 no_30
-no_300
-no_4
+no_300ft
+no_4g
 no_5
 no_a2dp
 no_ac
@@ -5717,21 +5714,27 @@ nose
 nosey
 nostalgic
 not_1
-not_10
 not_100
-not_10000
-not_1600
+not_1000ma
+not_10ft
+not_1600mah
 not_1900
+not_1a
 not_2
 not_24
-not_2800
+not_2800mah
+not_2nd
 not_3
-not_3200
-not_3500
+not_3000mah
+not_3200mah
+not_3500mah
 not_4
-not_4300
+not_4300mah
+not_4g
+not_4gb
 not_5
-not_7600
+not_5s
+not_7600mah
 not_a2dp
 not_able
 not_absolutely
@@ -6548,7 +6551,6 @@ occluding
 occur
 occurs
 ocd
-ocean
 ocho
 oct
 octane
@@ -6960,6 +6962,7 @@ petals
 petite
 pets
 petty
+pgmpp
 phablets
 phamplet
 phenomenal
@@ -7082,6 +7085,7 @@ pluses
 plush
 plusses
 plyable
+pn
 pnones
 pocket
 pocketable
@@ -7133,7 +7137,6 @@ portrait
 portrayed
 portrays
 ports
-portusb
 pos
 posed
 positioned
@@ -8078,7 +8081,9 @@ scrathes
 screams
 screeching
 screechy
+screeen
 screen
+screenmate
 screenprotectors
 screens
 screensaver
@@ -8234,6 +8239,7 @@ shape
 shaped
 shareable
 sharing
+sharkk
 sharp
 sharpen
 shattered
@@ -8382,6 +8388,7 @@ singularily
 sinked
 sir
 siri
+siriusxm
 sister
 sisters
 sit
@@ -8420,7 +8427,6 @@ skiva
 skull
 skulls
 skunks
-sky
 skyline
 skype
 slap
@@ -8716,7 +8722,6 @@ sreen
 ss
 sssssatisfied
 sstrong
-st
 stab
 stabbed
 stabilized
@@ -8799,7 +8804,6 @@ stilling
 stills
 stinks
 stinky
-stitch
 stitching
 stitchway
 stll
@@ -10277,7 +10281,6 @@ wroks
 wrong
 wtih
 wut
-wx435
 x
 x1
 x10
@@ -10285,7 +10288,6 @@ x2
 x5
 x6
 x930bt
-xaa
 xba
 xbox
 xd
