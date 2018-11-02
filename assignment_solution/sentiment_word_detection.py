@@ -153,9 +153,10 @@ def clean_amazon_review_df(df):
         # replace url with http_url token
         regex = r"https?\:\/\/[0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*(:(0-9)*)*(\/?)([a-zA-Z0-9\-\.\?\,\'\/\\\+&amp;%\$#_=]*)?"
         text = re.sub(regex, "http_url", text, 0)
+        text = re.sub(r"bit\.ly\/[\w]+", "http_url", text, 0)
 
         # add spaces between digit and alphabet
-        text = re.sub(r'\b(\d+)([a-z]+)\b', r'\g<1> \g<2>', text, 0)
+        # text = re.sub(r'\b(\d+)([a-z]+)\b', r'\g<1> \g<2>', text, 0)
 
         # convert negation word and following word into single token "not good" => not_good
         text = re.sub(r'\b(no|not)\b\s+(\b\w+\b)', "\g<1>_\g<2>", text, 0)
