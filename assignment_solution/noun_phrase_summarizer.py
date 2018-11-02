@@ -3,11 +3,11 @@ from nltk import RegexpParser, word_tokenize, pos_tag
 from nltk.stem import WordNetLemmatizer
 # from nltk.corpus import conll2000
 import pandas as pd
-
+import tqdm as tqdm
 import re
 import html.parser
-from .__settings import amazon_review_file_loc
-
+import math
+from __settings import amazon_review_file_loc
 """
 from assignment_solution.noun_phrase_summarizer import sandbox
 sandbox()
@@ -39,18 +39,7 @@ def clean_dataset():
 
 	return amazonReviewDF
 
-import math
-import sys, os
-
-sys.path.insert(1, os.path.join(sys.path[0], '..'))
-from settings import amazon_review_file_loc
-
-def sandbox():
-	tfidf_top_3()
- 
-
-def extract_top_20_from_reviews():
-	amazonReviewDF = pd.read_json(amazon_review_file_loc, lines=True)
+def extract_top_20_from_reviews(amazonReviewDF):
 	c = Counter()
 	for index, d in amazonReviewDF.iterrows():
 		input_data = d.reviewText + " " + d.summary
@@ -60,14 +49,13 @@ def extract_top_20_from_reviews():
 	
 	print("\n {}".format(c.most_common(20)))
 
-def top_3():
-	amazonReviewDF = pd.read_json(amazon_review_file_loc, lines=True)
+def top_3(amazonReviewDF):
 	pop_products = ['B005SUHPO6','B0042FV2SI','B008OHNZI0']
 	for product in pop_products:
 		c = Counter()
 		
 		df = amazonReviewDF.loc[amazonReviewDF.asin==product]
-		for index, d in df.iterrows():
+		for index, d in tqdm(df.iterrows()):
 			input_data = d.reviewText + " " + d.summary
 			extract_np(c, input_data)
 		print("\n10 representative noun phrases for {} are: {}".format(product, c.most_common(10)))
@@ -163,42 +151,7 @@ def clean_np(parsed_sentence):
 			yield ' '.join(word for word,tag in subtree.leaves() if not (tag == 'DT' and str.lower(word) in ['the', 'a', 'an', 'these', 'that', 'this', 'those']))
 
 if __name__ == "__main__":
-	sandbox()
+	data = clean_dataset()
+	extract_top_20_from_reviews(data)
+	# top_3(data)
 
-# Not useful for now...
-
-# def npchunk_features(sentence, i, history):
-# 	word, pos = sentence[i]
-# 	return {"pos": pos}
-
-
-# class ConsecutiveNPChunkTagger(nltk.TaggerI):
-
-# 	def __init__(self, train_sents):
-# 		train_set = []
-# 		for tagged_sent in train_sents:
-# 			untagged_sent = nltk.tag.untag(tagged_sent)
-# 			history = []
-# 			for i, (word, tag) in enumerate(tagged_sent):
-# 				featureset = npchunk_features(untagged_sent, i, history)
-# 				train_set.append( (featureset, tag) )
-# 				history.append(tag)
-# 		self.classifier = nltk.MaxentClassifier.train(train_set, algorithm='megam', trace=0)
-	
-# 	def tag(self, sentence):
-# 		history = []
-# 		for i, word in enumerate(sentence):
-# 			featureset = npchunk_features(sentence, i , history)
-# 			tag = self.classifier.classify(featureset)
-# 			history.append(tag)
-# 		return zip(sentence, history)
-
-# class ConsecutiveNPChunker(nltk.ChunkParserI):
-# 	def __init__(self, train_sents):
-# 		tagged_sents = [[((w,t), c) for (w,t,c) in nltk.chunk.tree2conlltags(sent)] for sent in train_sents]
-# 		self.tagger = ConsecutiveNPChunkTagger(tagged_sents)
-
-# 	def parse(self, sentence):
-# 		tagged_sents = self.tagger.tag(sentence)
-# 		conlltags = [(w,t,c,) for ((w,t), c) in tagged_sents]
-# 		return nltk.chunk.conlltags2tree(conlltags)
