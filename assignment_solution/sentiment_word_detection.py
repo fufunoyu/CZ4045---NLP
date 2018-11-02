@@ -151,7 +151,7 @@ def clean_amazon_review_df(df):
         text = x.summary.lower()
 
         # replace url with http_url token
-        regex = r"https?\:\/\/[0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*(:(0-9)*)*(\/?)([a-zA-Z0-9\-\.\?\,\'\/\\\+&amp;%\$#_]*)?"
+        regex = r"https?\:\/\/[0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*(:(0-9)*)*(\/?)([a-zA-Z0-9\-\.\?\,\'\/\\\+&amp;%\$#_=]*)?"
         text = re.sub(regex, "http_url", text, 0)
 
         # add spaces between digit and alphabet

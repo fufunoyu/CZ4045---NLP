@@ -26,7 +26,7 @@ def main(argv):
     for arg in remainders:
 
         if arg == 'analysis':
-            db_ops.init_amazon_review_db()
+            pass
         elif arg == 'nounphrase':
             pass
         elif arg == 'sentiment':
