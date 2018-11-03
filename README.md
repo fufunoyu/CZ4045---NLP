@@ -35,11 +35,7 @@ The following NLTK models need to be downloaded to run some of the features prov
 This section describes the steps or commands needed for running the code that solves the problems listed in the project assignment. Please ensure the `CellPhoneReview.json` has been placed in the `dataset/` folder before using any of the commands.
 
 #### 1. Dataset Analysis
-<<<<<<< Updated upstream
-Execute the following command in `command prompt` to start Dataset Analysis. A trace sample is available [here](results/Dataset%20Analysis/trace.txt)
-=======
-Execute the following command in `command prompt` to start Dataset Analysis. A trace simple is available [here](results/dataset_analysis/trace.txt)
->>>>>>> Stashed changes
+Execute the following command in `command prompt` to start Dataset Analysis. A trace sample is available [here](results/dataset_analysis/trace.txt)
 ```
 $ python main.py analysis
 ``` 
