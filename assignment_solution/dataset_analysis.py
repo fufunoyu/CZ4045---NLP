@@ -1,36 +1,27 @@
 import pandas as pd
 import nltk
-#import wordninja
 import numpy as np
-import matplotlib.mlab as mlab
 import matplotlib.pyplot as plt
-#nltk.download()
+import sys
+import re
+import time
+import datetime
+import string
+import random
+import contractions
 from itertools import chain
 from collections import Counter
 from collections import OrderedDict
-from nltk.stem.snowball import SnowballStemmer
+import multiprocessing
+from multiprocessing import Pool
+
+# NLTK
 from nltk.stem import PorterStemmer
 from nltk.corpus import stopwords
 from nltk import sent_tokenize
-from nltk.probability import FreqDist
-import contractions
-#import tqdm
-import time
-import datetime
-import sys
-import re
-import string
-import concurrent.futures
-import multiprocessing
-from multiprocessing import Pool
-import pandas as pd
-import random
 
-from .__settings import sample_review_file_loc, amazon_review_file_loc, \
-    amazon_review_word_dict_loc, clean_amazon_review_file_loc
+from .__settings import sample_review_file_loc, amazon_review_file_loc
 
-# import dask.dataframe as dd
-# from dask.multiprocessing import get
 console_encoding = sys.getdefaultencoding()
 num_processes = multiprocessing.cpu_count()
 num_partitions = 5
@@ -58,11 +49,9 @@ def parallelize_regex_clean_text(df):
     return df
 
 def datacleaningpart1():
-    
     global df
 
     df = parallelize_dataframe(df, parallelize_regex_clean_text)
-
 
 ########## Popular Products and Frequent Reviewers ##########
 
@@ -111,8 +100,8 @@ def plotgraph(freqdict, graphname, xlabel, ylabel):
 # bulk of the code
 def sentenceseg():
     global df
-    df = parallelize_dataframe(df, parallelizegetsentlen)
     
+    df = parallelize_dataframe(df, parallelizegetsentlen)
     sentencecounts = df['sentencelength'].value_counts().to_dict()
     print('Sentence length appended')
     print ('')
@@ -120,7 +109,7 @@ def sentenceseg():
     # ordering the frequency dictionary
     sentencecounts = OrderedDict(sorted(sentencecounts.items(), key=lambda t: t[0]))
 
-    plotgraph(sentencecounts, "Sentence Segmentation", "# of sentences in a review", "# of reviews of each length")
+    plotgraph(sentencecounts, "sentence_segmentation", "# of sentences in a review", "# of reviews of each length")
 
     # sampling 3 short reviews and 2 long ones
     df1_elements = df[df.sentencelength < 5].sample(n=3)
@@ -128,12 +117,10 @@ def sentenceseg():
     df_elements = pd.concat([df1_elements, df2_elements])
     df_elements.to_csv('sample_sentence_lengths.csv')
 
-
 ########## Tokenization and Stemming ##########
 
 ps = PorterStemmer()
 stemmedenglishstopwords = [ps.stem(word) for word in stopwords.words('english')]
-
 
 def parallelizestrippunctuations(df):
     df['reviewText'] = df['reviewText'].apply(lambda x: ''.join([i for i in x if i not in string.punctuation]))
@@ -172,7 +159,6 @@ def parallelizegetlengthofstemmedtokens(df):
     return df
 
 def tokenandstem():
-
     # tokenizing words and counting number of unique words in each review
     global df
     df = parallelize_dataframe(df, parallelizetokenizetext)
@@ -187,7 +173,7 @@ def tokenandstem():
     tokencounts = {k: v for k, v in tokencounts.items() if v > 10}
 
     # plotting frequency graph
-    plotgraph(tokencounts, "Tokenized words without stemming", "# of words in a review", "# of reviews of each length")
+    plotgraph(tokencounts, "tokenized_words_without_stemming", "# of words in a review", "# of reviews of each length")
     print ('Tokenizing done')
     print ('')
 
@@ -204,7 +190,7 @@ def tokenandstem():
     stemmedtokencounts = {k: v for k, v in stemmedtokencounts.items() if v > 10}
 
     # plotting frequency graph
-    plotgraph(stemmedtokencounts, "Tokenized words with stemming", "# of words in a review", "# of reviews of each length")
+    plotgraph(stemmedtokencounts, "tokenized_words_with_stemming", "# of words in a review", "# of reviews of each length")
     print ('Stemming done')
     print ('')
 
@@ -274,4 +260,3 @@ def main():
     print ("Time for postagging: ", str(datetime.timedelta(seconds=int(t4 - t3))))
     print ('')
     print ("Total time: ", str(datetime.timedelta(seconds=int(t4 - t0))))
-                                           
