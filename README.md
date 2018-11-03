@@ -29,6 +29,8 @@ The following NLTK models need to be downloaded to run some of the features prov
 >>> nltk.download('punkt')
 >>> nltk.download('averaged_perceptron_tagger')
 >>> nltk.download('wordnet')
+>>> nltk.download('stopwords')
+>>> nltk.download('conll2000')
 ```
 
 ## Usage guide
