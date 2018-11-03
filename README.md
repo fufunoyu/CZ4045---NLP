@@ -42,11 +42,12 @@ $ python main.py analysis
 
 #### 2. Noun Phrase Summarizer
 
+
 #### 3. Sentiment Word Detection
 Execute the following command in `command prompt` to start generating the top 20 positive and negative words.
 ```
 $ python main.py sentiment
 ``` 
-A trace sample is available [here](results/sentiment_word_detection/trace.txt)
+A trace sample is available [here](results/sentiment_word_detection/trace.txt). Please note that the actual console output will differ somewhat from the `trace.txt` file as the file does not include console output for printing progress such as `1000 of 190,000 done`.
 
 #### 4. Application
