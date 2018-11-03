@@ -15,14 +15,15 @@ Project assignment for NTU CZ4045 Natural Language Processing
 The review dataset file are omitted to save space in project directory. Please place your `CellPhoneReview.json` dataset file in the `dataset/` folder.
 
 ## Project Installation Guide
-Project setup is as simple as the following 2 steps 
-#### Install package requirements
+Project setup is as simple as the following 2 steps
+#### 1. Install package requirements
 The following command will install the required python packages.
 ```
 $ pip install -r requirements.txt
 ```
 
-In addition, the following NLTK models need to be downloaded to run some of the features provided by `NLTK` such as `pos tagging`. Run the following codes on a python interpreter.
+#### 2. Download NLTK models
+The following NLTK models need to be downloaded to run some of the features provided by the `NLTK` i.e. `pos tagging`. Run the following codes on a python interpreter.
 ```
 >>> import nltk
 >>> nltk.download('punkt')
