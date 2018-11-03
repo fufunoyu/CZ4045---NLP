@@ -34,7 +34,7 @@ In addition, the following NLTK models need to be downloaded to run some of the 
 This section describes the steps or commands needed for running the code that solves the problems listed in the project assignment.
 
 #### 1. Dataset Analysis
-Execute the following command in `command prompt` to start Dataset Analysis. A trace simple is available [here](results/Dataset%20Analysis/trace.txt)
+Execute the following command in `command prompt` to start Dataset Analysis. A trace sample is available [here](results/Dataset%20Analysis/trace.txt)
 ```
 $ python main.py analysis
 ``` 
@@ -46,5 +46,6 @@ Once the `CellPhoneReview.json` has been placed in the `dataset/` folder, execut
 ```
 $ python main.py sentiment
 ``` 
+A trace sample is available [here](results/sentiment_word_detection/trace.txt)
 
 #### 4. Application
