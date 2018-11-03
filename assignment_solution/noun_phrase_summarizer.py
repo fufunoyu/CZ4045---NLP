@@ -7,6 +7,7 @@ import tqdm
 import re
 import html.parser
 import math
+import pickle
 from .chunktagger import ConsecutiveNPChunker
 from .__settings import amazon_review_file_loc
 
@@ -27,14 +28,13 @@ chunk_parser.load()
 
 def clean_dataset():
 	amazonReviewDF = pd.read_json(amazon_review_file_loc, lines=True)
-	
 	col_label = amazonReviewDF.columns.get_loc("reviewText") 
 	url_regex = r"https?\:\/\/[0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*(:(0-9)*)*(\/?)([a-zA-Z0-9\-\.\?\,\'\/\\\+&amp;%\$#_]*)?"
 
 	# print("before")
 	# print(amazonReviewDF.iloc[1,2])
 	count = 0
-	for index, d in amazonReviewDF.iterrows():
+	for index, d in tqdm.tqdm(amazonReviewDF.iterrows()):
 		
 		review = d.reviewText
 		review_lower = review.lower()
@@ -48,14 +48,17 @@ def clean_dataset():
 
 	return amazonReviewDF
 
+def save_clean_dataset():
+	cleaned_data = clean_dataset()
+	pickle.dump(cleaned_data, open('clean_data.pickle', 'wb'))
+
+
 def extract_top_20_from_reviews(amazonReviewDF, mode):
 	c = Counter()
 	parser = regex_parser if mode == "regexp" else chunk_parser
 	for index, d in tqdm.tqdm(amazonReviewDF.iterrows()):
 		input_data = d.reviewText + " " + d.summary
 		extract_np(c, input_data, parser)
-		if index%100 == 0:
-			print("\rfinished %d iterations" %index, end="")
 	
 	print("\n {}".format(c.most_common(20)))
 
@@ -98,45 +101,52 @@ def clean_np(parsed_sentence):
 
 # def tfidf_top_3():
 # 	amazonReviewDF = pd.read_json(amazon_review_file_loc, lines=True)
-# 	np_to_products = dict()
-# 	c = Counter()
+# 	grammar = r"""
+# 		NBAR: {<NN.*|JJ.*>+<NN.*>}
+# 		NP: {<NBAR>}
+# 			{<NBAR><IN><NBAR>}
+# 	"""
+# 	cp = RegexpParser(grammar)
+# 	product_counter_dict = dict()
+# 	product_dict = dict()
 # 	products = ['B005SUHPO6','B0042FV2SI','B008OHNZI0']
-# 	for product in products:		
+# 	for product in products:
+# 		added = False
+# 		c = Counter()		
 # 		df = amazonReviewDF.loc[amazonReviewDF.asin==product]
-# 		for index, d in df.iterrows():
-# 			extract_np(c, d.reviewText)
-# 		for noun_phrase in set(c.elements()):
-# 			try:
-# 				np_to_products[noun_phrase] += 1
-# 			except KeyError:
-# 				np_to_products[noun_phrase] = 0
+# 		for _, d in df.iterrows():
+# 			noun_phrases = tfidf_extract_np(c, d.reviewText, cp)
+# 			for noun_phrase in noun_phrases:
+# 				try:
+# 					if not added:
+# 						product_dict[noun_phrase] += 1
+# 						added = True
+# 				except KeyError:
+# 					product_dict[noun_phrase] = 1
+# 					added = True
+# 		product_counter_dict[product] = c
 
 # 	for noun_phrase in c.elements():
-# 		c[noun_phrase] = c[noun_phrase] * math.log(len(products)/1+np_to_products[noun_phrase])
-# def tfidf_extract_np(data):
-	# grammar = r"""
-	# 	NBAR: {<NN.*|JJ.*>+<NN.*>}
-	# 	NP: {<NBAR>}
-	# 		{<NBAR><IN><NBAR>}
-	# """
-	
-	# cp = RegexpParser(grammar)
-	# text = word_tokenize(data)
-	# sentence = pos_tag(text)
-	# result = []
-	# parsed_sentence = cp.parse(sentence)
-	# for np in clean_np(parsed_sentence):
-	# 	result.append(np)
-	# c = Counter()
-	# return c.update(lower_and_lemma(result))
+# 		product_dict[noun_phrase] = c[noun_phrase] * math.log(len(products)/1+np_to_products[noun_phrase])
+
+# def tfidf_extract_np(c, data, cp):
+# 	text = word_tokenize(data)
+# 	sentence = pos_tag(text)
+# 	result = []
+# 	parsed_sentence = cp.parse(sentence)
+# 	for np in clean_np(parsed_sentence):
+# 		result.append(np)
+# 	c.update(lower_and_lemma(result))
+# 	return result
 
 def main():
-	# data = clean_dataset()
-	data = pd.read_json(amazon_review_file_loc, lines=True)
-	mode = "chunktagger"
-	# mode = "regexp"
+	# data = pd.read_json(amazon_review_file_loc, lines=True)
+	# # mode = "chunktagger"
+	mode = "regexp"
 	print("mode is {}".format(mode))
-	top_3(data, mode)
-	# extract_top_20_from_reviews(data, mode)
+	save_clean_dataset()
+	data = pickle.load(open('clean_data.pickle', 'rb'))
+	# # top_3(data, mode)
+	extract_top_20_from_reviews(data, mode)
 
 

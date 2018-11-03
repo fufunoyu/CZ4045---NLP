@@ -31,9 +31,6 @@ def main(argv):
         elif arg == 'nounphrase':
             from assignment_solution import noun_phrase_summarizer as nps
             nps.main()
-        elif arg == 'chunktagger':
-            from assignment_solution import chunktagger as ct
-            ct.main()
         elif arg == 'sentiment':
             from assignment_solution import sentiment_word_detection
             sentiment_word_detection.main()
