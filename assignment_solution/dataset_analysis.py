@@ -24,6 +24,7 @@ import concurrent.futures
 import multiprocessing
 from multiprocessing import Pool
 import pandas as pd
+import random
 
 from .__settings import sample_review_file_loc, amazon_review_file_loc, \
     amazon_review_word_dict_loc, clean_amazon_review_file_loc
@@ -59,17 +60,8 @@ def parallelize_regex_clean_text(df):
 def datacleaningpart1():
     
     global df
-    
-    # dropNAs
-    df = df.dropna()
-
-    # drop entries with no reviews
-    df = df[df.reviewText != '']
 
     df = parallelize_dataframe(df, parallelize_regex_clean_text)
-
-    # convert to lower case
-    df['reviewText'] = df['reviewText'].str.lower()
 
 
 ########## Popular Products and Frequent Reviewers ##########
@@ -86,6 +78,17 @@ def popular():
     print ('')
 
 ########## Sentence Segmentation ##########
+
+# data cleaning part 2
+def datacleaningpart2():
+    global df
+    
+    # dropNAs
+    df = df.dropna()
+
+    # drop entries with no reviews
+    df = df[df.reviewText != '']
+    return df
                                                            
 # define a function to get sentence length
 def parallelizegetsentlen(df):
@@ -96,12 +99,13 @@ def parallelizegetsentlen(df):
 def plotgraph(freqdict, graphname, xlabel, ylabel):
     x = list(freqdict.keys())
     y = list(freqdict.values())
-    plt.title(graphname)
+    plt.figure()
+    plt.bar(x, y, width=1.0)
     plt.xlabel(xlabel)
     plt.ylabel(ylabel)
-    plt.plot(x, y)
+    plt.tight_layout()
     #plt.show()
-    plt.savefig(graphname + ".png")
+    plt.savefig(graphname + '.png')
     plt.clf()
 
 # bulk of the code
@@ -140,10 +144,11 @@ def parallelizefixcontractions(df):
     df['reviewText'] = df['reviewText'].apply(lambda x: contractions.fix(x))
     return df
 
-# data cleaning part 2
-def datacleaningpart2():
+# data cleaning part 3
+def datacleaningpart3():
     global df
-    
+    # convert to lower case
+    df['reviewText'] = df['reviewText'].str.lower()
     df = parallelize_dataframe(df, parallelizefixcontractions)
     df = parallelize_dataframe(df, parallelizestrippunctuations)
 
@@ -171,11 +176,6 @@ def tokenandstem():
     # tokenizing words and counting number of unique words in each review
     global df
     df = parallelize_dataframe(df, parallelizetokenizetext)
-
-    # data cleaning part 3
-    # split up known compound words e.g. helloworld -> hello world
-    # tqdm.pandas(desc="my bar!")
-    # 
 
     df = parallelize_dataframe(df, parallelizegetlengthoftokens)
     tokencounts = df['lengthoftokenized'].value_counts().to_dict()
@@ -245,9 +245,12 @@ def tokenandstem():
 
 def postagging():
     # pos tagging 
-    for row in df['tokenizedwords'].sample(n=5):
-        print(nltk.pos_tag(row))
-        print ('')
+    sampledf = df.sample(n=5)
+    sampledf['selectedSentence'] = sampledf.apply(lambda x: random.choice(sent_tokenize(x['reviewText'])), axis = 1)
+    sampledf['selectedSentencePosTag'] = sampledf.apply(lambda x: nltk.pos_tag(nltk.word_tokenize(x['selectedSentence'])), axis = 1)
+    for index, row in sampledf.iterrows():
+        print (row['selectedSentence'] + ' => ' + str(row['selectedSentencePosTag']) + '\n')
+    print ('')
 
 def main():
     t0 = time.time()
@@ -256,11 +259,12 @@ def main():
     t1 = time.time()
     print ("Time for popular: ", str(datetime.timedelta(seconds=int(t1 - t0))))
     print ('')
+    datacleaningpart2()
     sentenceseg()
     t2 = time.time()
     print ("Time for sentenceseg: ", str(datetime.timedelta(seconds=int(t2 - t1))))
     print ('')
-    datacleaningpart2()
+    datacleaningpart3()
     tokenandstem()
     t3 = time.time()
     print ("Time for tokenandstem: ", str(datetime.timedelta(seconds=int(t3 - t2))))
