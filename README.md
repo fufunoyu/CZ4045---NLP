@@ -32,7 +32,7 @@ The following NLTK models need to be downloaded to run some of the features prov
 ```
 
 ## Usage guide
-This section describes the steps or commands needed for running the code that solves the problems listed in the project assignment.
+This section describes the steps or commands needed for running the code that solves the problems listed in the project assignment. Please ensure the `CellPhoneReview.json` has been placed in the `dataset/` folder before using any of the commands.
 
 #### 1. Dataset Analysis
 Execute the following command in `command prompt` to start Dataset Analysis. A trace sample is available [here](results/Dataset%20Analysis/trace.txt)
@@ -43,7 +43,7 @@ $ python main.py analysis
 #### 2. Noun Phrase Summarizer
 
 #### 3. Sentiment Word Detection
-Once the `CellPhoneReview.json` has been placed in the `dataset/` folder, execute the following command in `command prompt` to start generating the top 20 positive and negative words.
+Execute the following command in `command prompt` to start generating the top 20 positive and negative words.
 ```
 $ python main.py sentiment
 ``` 
