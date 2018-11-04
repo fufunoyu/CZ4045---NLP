@@ -48,7 +48,7 @@ The following NLTK models need to be downloaded to run some of the features prov
 ## Usage guide
 This section describes the steps or commands needed for running the code that solves the problems listed in the project assignment. Please ensure the `CellPhoneReview.json` has been placed in the `dataset/` folder before using any of the commands.
 
-#### 1. Dataset Analysis
+### 1. Dataset Analysis
 Execute the following command in `command prompt` to start Dataset Analysis. A trace sample is available [here](results/dataset_analysis/trace.txt)
 ```
 $ python main.py analysis
@@ -122,14 +122,14 @@ In addition, the following shows the graph plot for frequency statistics of sent
 ![alt text](results/dataset_analysis/graph_result.png)
 
 
-#### 2. Noun Phrase Summarizer
+### 2. Noun Phrase Summarizer
 Execute the following command in `command prompt` to start generating the top 20 positive and negative words.
 ```
 $ python main.py nounphrase
 ``` 
 A trace sample is available [here](results/noun_phrase_summarizer/trace.txt). In our experiment, we ran the program using two different types of taggers. The final one used will be the RegExp Parser which is the default mode. If you wish to run it with the ConsecutiveNPChunk tagger simply uncomment the line which sets the mode to "chunktagger". Similarly, there is a set of data that was cleaned of URLs but was not uploaded due to size restrictions. The difference is minimal but the data can be cleaned by uncommenting the line "save_clean_dataset()" and the line after it.
 
-#### 3. Sentiment Word Detection
+### 3. Sentiment Word Detection
 Execute the following command in `command prompt` to start generating the top 20 positive and negative words.
 ```
 $ python main.py sentiment
@@ -140,7 +140,7 @@ The following image shows the actual sample trace and graph output you would see
 
 ![alt text](results/sentiment_word_detection/result.png)
 
-#### 4. Application
+### 4. Application
 
 This tool is written in Java, using Stanford NLP v3.9.1.  
 To run the tool, you will need to have Stanford NLP installed. There are many ways to do this, but the following way is recommended if you (i) don't have Maven, (ii) don't want to use the in-built server and (iii) don't want to extract the source files from the jar file
