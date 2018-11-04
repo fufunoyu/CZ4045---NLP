@@ -114,3 +114,6 @@ dataset/*.json
 dataset/*.csv
 
 .vscode/
+
+# cleandataset
+clean_data.pickle
