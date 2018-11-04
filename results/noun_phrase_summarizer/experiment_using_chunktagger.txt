@@ -1,0 +1,4 @@
+ [top 20 noun phrases of all reviews using chunktagger]
+ 
+ [('i', 554942), ('it', 553863), ('you', 164586), ('', 127607), ('case', 90447), ('phone', 75462), ('they', 58453), ('that', 57802), ('one', 46192), ('me', 44582), ('my
+phone', 33750), ('which', 33103), ('what', 31870), ('them', 31079), ('there', 29474), ('product', 24501), ('battery', 20582), ('price', 19473), ('all', 16850), ('screen', 16837)]

@@ -13,9 +13,9 @@ from .__settings import amazon_review_file_loc
 
 # grammar structure
 grammar = r"""
-		NBAR: {<NN.*|JJ.*>+<NN.*>}
-		NP: {<NBAR>}
-			{<NBAR><IN><NBAR>}
+		NBAR: {<DT>*<NN.*|JJ.*>+<NN.*>}
+		NP: {<NBAR><IN><NBAR>}
+			{<NBAR>}
 		"""
 regex_parser = RegexpParser(grammar)
 
@@ -107,9 +107,8 @@ def clean_np(parsed_sentence):
 
 def five_reviews(amazonReviewDF, mode="regexp"):
 	# 5 indexes chosen randomly from a RNG
-	# 	>>> random.choices(range(190919), k=5)
-	# [120506, 31131, 110263, 34134, 68458]	
-	five_random_review_indexes = [120506, 31131, 110263, 34134, 68458]
+	# 	>>> random.choices(range(190919), k=5)	
+	five_random_review_indexes = [121689, 163717, 30475, 187484, 151476]
 	parser = regex_parser if mode == "regexp" else chunk_parser
 		
 	df = amazonReviewDF.iloc[five_random_review_indexes]
@@ -126,7 +125,7 @@ def main():
 	# save_clean_dataset()
 	# data = pickle.load(open('clean_data.pickle', 'rb'))
 	data = pd.read_json(amazon_review_file_loc, lines=True)
-	# # mode = "chunktagger"
+	# mode = "chunktagger"
 	mode = "regexp"
 	print("mode is {}".format(mode))
 	top_3(data, mode)
