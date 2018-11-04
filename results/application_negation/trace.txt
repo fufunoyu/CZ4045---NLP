@@ -1,0 +1,108 @@
+Chans-MacBook-Pro:stanford-corenlp-full-2018-02-27 chanyihao$ javac -cp stanford-corenlp-3.9.1.jar:stanford-corenlp-3.9.1-javadoc.jar:stanford-corenlp-3.9.1-models.jar:stanford-corenlp-3.9.1-sources.jar: NegationDetection.java && java -cp stanford-corenlp-3.9.1.jar:stanford-corenlp-3.9.1-javadoc.jar:stanford-corenlp-3.9.1-models.jar:stanford-corenlp-3.9.1-sources.jar: -Xmx1200m NegationDetection
+Adding annotator tokenize
+No tokenizer type provided. Defaulting to PTBTokenizer.
+Adding annotator ssplit
+Text processed!
+i
+'m
+sure
+that
+there
+is
+something
+that
+says
+it
+will
+not
+come
+Replaced pictured
+Replaced still
+Replaced i
+Negating word: come
+no1_pictured
+Replaced was
+Negating word: no1_pictured
+no1
+Replaced disappointed
+Negating word: no1
+no1_still
+no1_i
+no1_was
+no1_disappointed
+.
+the
+tools
+helped
+me
+get
+the
+job
+done
+,
+but
+they
+also
+did
+not
+hold
+Replaced up
+Replaced well
+Negating word: hold
+no1_up
+Negating word: no1_up
+no1_well
+Negating word: no1_well
+.
+the
+plastic
+plying
+tools
+did
+n't
+hold
+Replaced broke
+Replaced fairly
+Replaced quickly
+Negating word: hold
+no1
+Negating word: no1
+no1_broke
+Negating word: no1_broke
+no1_fairly
+no1_quickly
+.
+i
+ca
+n't
+say
+Replaced that
+Replaced it
+Replaced was
+Replaced n't
+Negating word: say
+no1_that
+Replaced user
+Negating word: no1_that
+no1_it
+Replaced error
+Negating word: no1_it
+no1_was
+no1_n't
+no1_user
+no1_error
+,
+but
+they
+seemed
+very
+cheap
+.
+
+
+
+Original String
+I'm sure that there is something that says it will not come pictured, still I was disappointed. The tools helped me get the job done, but they also did not hold up well. The plastic plying tools didn't hold and broke fairly quickly. I can't say that it wasn't user error, but they seemedvery cheap.
+New String
+[i, 'm, sure, that, there, is, something, that, says, it, will, not, no1_come, no1_pictured, no1, no1_still, no1_i, no1_was, no1_disappointed, ., the, tools, helped, me, get, the, job, done, ,, but, they, also, did, not, no1_hold, no1_up, no1_well, ., the, plastic, plying, tools, did, n't, no1_hold, no1, no1_broke, no1_fairly, no1_quickly, ., i, ca, n't, no1_say, no1_that, no1_it, no1_was, no1_n't, no1_user, no1_error, ,, but, they, seemed, very, cheap, .]
+Chans-MacBook-Pro:stanford-corenlp-full-2018-02-27 chanyihao$

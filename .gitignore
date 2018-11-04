@@ -1,3 +1,7 @@
+cz4045_nlp.db
+*.pickle
+
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -112,8 +116,6 @@ dmypy.json
 
 dataset/*.json
 dataset/*.csv
+dataset/*.txt
 
 .vscode/
-
-# cleandataset
-clean_data.pickle

@@ -8,6 +8,9 @@ Project assignment for NTU CZ4045 Natural Language Processing
 4. Phang Jun Yu ([phangjunyu](https://github.com/phangjunyu))
 5. Soh Jun Jie ([sohjunjie](https://github.com/sohjunjie))
 
+### Readme Notice
+All relative links included here assume that you are currently inside the `source` folder (project folder)
+
 
 ## Version information
 - Python 3.6
@@ -51,11 +54,7 @@ $ python main.py analysis
 ``` 
 
 #### 2. Noun Phrase Summarizer
-Execute the following command in `command prompt` to start generating the top 20 positive and negative words.
-```
-$ python main.py nounphrase
-``` 
-A trace sample is available [here](results/noun_phrase_summarizer/trace.txt). In our experiment, we ran the program using two different types of taggers. The final one used will be the RegExp Parser which is the default mode. If you wish to run it with the ConsecutiveNPChunk tagger simply uncomment the line which sets the mode to "chunktagger". Similarly, there is a set of data that was cleaned of URLs but was not uploaded due to size restrictions. The difference is minimal but the data can be cleaned by uncommenting the line "save_clean_dataset()" and the line after it.
+
 
 #### 3. Sentiment Word Detection
 Execute the following command in `command prompt` to start generating the top 20 positive and negative words.
