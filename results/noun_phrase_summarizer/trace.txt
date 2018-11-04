@@ -1,0 +1,35 @@
+$ python main.py nounphrase
+mode is regexp
+836it [00:14, 56.72it/s]
+
+10 representative noun phrases for B005SUHPO6 are: [('screen protector', 78), ('great case', 68), ('great product', 53), ('otter box', 42), ('great protection', 36), ('otterbox case', 36), ('otterbox defender', 34), ('best case', 33), ('good case', 29), ('belt clip', 23)]
+690it [00:08, 76.85it/s]
+
+10 representative noun phrases for B0042FV2SI are: [('screen protector', 170), ('matte finish', 44), ('great product', 29), ('finger print', 19), ('anti glare', 18), ('great price', 15), ('good product', 14), ('air bubble', 12), ('matte finishing', 12), ('phone screen', 11)]
+657it [00:09, 68.33it/s]
+
+10 representative noun phrases for B008OHNZI0 are: [('screen protector', 309), ('tech armor', 96), ('great product', 62), ('great screen protector', 38), ('best screen protector', 29), ('home button', 28), ('air bubble', 25), ('good product', 23), ('retina display', 22), ('tech armor screen protector', 21)]
+190919it [49:32, 64.22it/s]
+
+ [('screen protector', 15653), ('great case', 5836), ('great product', 5667), ('battery life', 4154), ('same time', 3674), ('sound quality', 3563), ('cell phone', 3492), ('great price', 3464), ('usb port', 3336), ('good case', 2846), ('good product', 2828), ('nice case', 2497), ('power button', 2466), ('car charger', 2308), ('phone case', 2276), ('long time', 2216), ('good quality', 2188), ('battery pack', 2181), ('only thing', 2148), ('usb cable', 1903)]
+0it [00:00, ?it/s]Review number: 120506
+Review Text and summary: After a couple of months, I noticed the side of it was peeling. I think that it might have been because I had it too close to the edge of the phone, but I just keep pushing it back down. The other day, I accidently dropped my phone while pulling it out of my pocket. It didn't fall very far and had
+a very nice two layer Trident case and the screen cracked. I don't know if the MilitaryShield is supposed to protect from cracks, but it cracked all the way from
+the lower right corner to multiple spots almost covering the entire surface of my Lumia 920. Miltary grade failed to stay on and the screen is cracked now.
+representative noun phrases are: ['other day', 'layer trident case', 'lower right corner', 'entire surface']
+Review number: 31131
+Review Text and summary: I have a T-Mobile Samsung Vibrant and i wanted to get a Bluetooth headset that was simple to use yet worked great,this is exactly what i
+was looking for.The device was found by my phone instantly and the sound quality could not be better,everything is very clear even when my Vibrant was on the other side of the room.The same goes for using this with your PC,just plug the usb adapter in and you are connected in less than a minute,Skype calls sound just as good as a regular wired headset (Except this is only for one ear).The only reason i knocked off one star is because of the battery life,i had the headset fully charged and it worked less than an hour and a half before needing to be charged again.I had the volume set to medium-high so i really expected it to last at least 2 hours but this is a minor complaint since most people will not talk for hours on end.Bottom line is that this is a great product that not only works well but is also very comfortable on the ear,i think you will be happy with it. Very good product with so/so battery life
+representative noun phrases are: ['t-mobile samsung vibrant', 'bluetooth headset', 'for.the device', 'sound quality', 'other side', 'usb adapter', 'regular wired
+headset', 'reason i', 'battery life', 'minor complaint', 'most people', 'end.bottom line', 'great product', 'good product', 'so/so battery life']
+Review number: 110263
+Review Text and summary: I LIKIE THIS CASE,JUST HATE THAT MY PHONE WONT STAND STRAIGHT UP WHEN I LAY IT ON IT'S BACKSIDE,OTHER THAN THAT I LIKE IT. MY CASE
+representative noun phrases are: ['this case', 'just hate that my phone wont stand straight up when', 'it on it', 'other than', 'my case']
+Review number: 34134
+Review Text and summary: Be aware that this will not fit all CD players and if you're not very careful when you install it, you can damage the rubber grommet that's around your CD player that keeps out the dust, etc.  Once installed it does sit at a good angle and location, but even on smooth roads it jiggles up and down a little bit and on rougher roads it dances around alot.  This might work for some applications such as a cell phone or maybe smaller GPS units, but with my 5 inch GPS, it just didn't work out very well. Okay.
+representative noun phrases are: ['cd player', 'cd player', 'good angle', 'smooth road', 'little bit', 'rougher road', 'cell phone', 'smaller gps unit', 'inch gps']
+Review number: 68458
+Review Text and summary: I have three power packs and they all feature a 4 bar LED display to indicate the level of power charge that they currently hold, this is no exception. It however only comes with two leads, one is the recharge lead with a USB and the other for I phones etc. So if you want to charge any other device you need to have your own cable which is not that big a deal. However it won't recharge from a computer so you need a separate charger which they say can be bought separately, luckily I already have one so no big deal for me, but may be an issue for some users.It needs to be fully charged before you use it and there is no information about how many times it will take and hold a charge as these are always degenerative. I have been using for a number of weeks now and it is fine, it
+takes longer to charge than a mains plug but that is to be expected with an output of around DC 5V/1.0A.Others have commented that the charge port is a bit tiny and needs to be correctly connected or it will not charge so do check, the LED lights come in to tell you how charged it is so not a big issue either. The User manual is very basic and pretty bad on the translation, it actually made me laugh and it is in English and German, but it gets the message across as at the end of the day it does actually work. You can get these with LED torches/flashlights too which are much better for festivals etc, but as a work a day power pack this is really very handy. I received a pack for review purposes. It is light weight, nice to look at easy to use and works, so I would give it the thumbs up - recommended. Nice Lightweight Power Pack
+representative noun phrases are: ['power pack', 'bar led display', 'power charge', 'recharge lead', 'other device', 'own cable', 'separate charger', 'big deal', 'users.it need', 'many time', 'main plug', 'dc 5v/1.0a.others', 'charge port', 'led light', 'big issue', 'user manual', 'led torches/flashlights', 'day power pack', 'review purpose', 'light weight', 'nice lightweight power pack']
+5it [00:00, 49.49it/s]

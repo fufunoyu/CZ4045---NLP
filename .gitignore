@@ -1,4 +1,6 @@
 cz4045_nlp.db
+*.pickle
+
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -117,6 +119,3 @@ dataset/*.csv
 dataset/*.txt
 
 .vscode/
-
-# cleandataset
-clean_data.pickle
