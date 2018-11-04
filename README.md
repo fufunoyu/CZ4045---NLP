@@ -1,6 +1,15 @@
 # CZ4045---NLP
 Project assignment for NTU CZ4045 Natural Language Processing
 
+### Team
+
+1. Chan Yi Hao ([manzaigit](https://github.com/manzaigit))
+2. Calvin Tan Sin Nian ([Calvin Tan Sin Nian]())
+3. Leung Kai Yiu ([KY-Leung](https://github.com/KY-Leung))
+4. Phang Jun Yu ([phangjunyu](https://github.com/phangjunyu))
+5. Soh Jun Jie ([sohjunjie](https://github.com/sohjunjie))
+
+
 ## Version information
 - Python 3.6
 
