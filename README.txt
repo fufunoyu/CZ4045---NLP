@@ -88,3 +88,5 @@ For 3.9.2
 javac -cp stanford-corenlp-3.9.2.jar:stanford-corenlp-3.9.2-javadoc.jar:stanford-corenlp-3.9.2-models.jar:stanford-corenlp-3.9.2-sources.jar: NegationDetection.java && java -cp stanford-corenlp-3.9.2.jar:stanford-corenlp-3.9.2-javadoc.jar:stanford-corenlp-3.9.2-models.jar:stanford-corenlp-3.9.2-sources.jar: -Xmx1200m NegationDetection
 ```
 5. Feel free to modify **testString** to see the different results the tool produce. 
+
+From this, one will be able to observed the changes made by the application. To understand why and when the change was made, the workings can be traced back: each (original) word is printed out in a line and the changes are prepended with words like 'Replaced' and 'Negating word: '
