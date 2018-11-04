@@ -53,7 +53,7 @@ Execute the following command in `command prompt` to start Dataset Analysis. A t
 ```
 $ python main.py analysis
 ``` 
-The followings are the actual sample trace and graph outputs you would see when running the dataset analysis.
+The followings are the actual sample trace and graph outputs you would see when running the above command.
 ```
 Top 10 products with most reviews:
 B005SUHPO6    836
@@ -142,7 +142,7 @@ $ python main.py sentiment
 ``` 
 A trace sample and graph image of the result can be found in the folder [here](results/sentiment_word_detection/). Please note that for the `trace.txt` the actual console output will differ somewhat as the file does not include console output for printing progress such as `1000 of 190,000 done`.
 
-The following image shows the actual sample trace and graph output you would see when running the `sentiment word detection` algorithm.
+The following image shows the actual sample trace and graph output you would see when running the `sentiment word detection` algorithm. The sample trace shows the top 20 positive and negative words along with the calculation of its `adjusted sentiment` value. The graph plot the top 20 positive and negative words by their `adjusted sentiment`.
 
 ![alt text](results/sentiment_word_detection/result.png)
 
