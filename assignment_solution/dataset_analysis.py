@@ -200,9 +200,6 @@ def tokenandstem():
     listoftokens = list(chain.from_iterable(listoftokens))
     # remove stopwords
     listoftokens = filter(lambda v: v not in stopwords.words('english'), listoftokens)
-    #listoftokens = [x for x in listoftokens if x.lower() not in stopwords.words('english')]
-    print("List of tokens without stopwords created")
-    print ('')
                 
     # creating list of stemmed words
     listofstemmedwords = df['stemmedwords'].tolist()
@@ -210,15 +207,14 @@ def tokenandstem():
     listofstemmedwords = list(chain.from_iterable(listofstemmedwords))
     # remove stopwords
     listofstemmedwords = filter(lambda v: v not in stemmedenglishstopwords, listofstemmedwords)
-    #listofstemmedwords = [x for x in listoftokens if x.lower() not in stemmedenglishstopwords]
-    print("List of stemmed words without stopwords created")
-    print ('')
 
     # frequencies before stemming
+    print("Top 20 most frequent words before stemming: ")
     print (Counter(listoftokens).most_common(20))
     print ('')
 
     # frequencies after stemming
+    print("Top 20 most frequent words after stemming: ")
     print (Counter(listofstemmedwords).most_common(20))
     print ('')
 
@@ -231,6 +227,7 @@ def tokenandstem():
 
 def postagging():
     # pos tagging 
+    print ('POS Tagging for 5 random sentences: ')
     sampledf = df.sample(n=5)
     sampledf['selectedSentence'] = sampledf.apply(lambda x: random.choice(sent_tokenize(x['reviewText'])), axis = 1)
     sampledf['selectedSentencePosTag'] = sampledf.apply(lambda x: nltk.pos_tag(nltk.word_tokenize(x['selectedSentence'])), axis = 1)
