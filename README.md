@@ -106,14 +106,15 @@ Name: reviewerID, dtype: int64
 
 **Top 20 most frequent words**
 ```
-Before stemming
+Top 20 most frequent words before stemming:
  [('phone', 174958), ('case', 146050), ('one', 86759), ('like', 71853), ('great', 66874), ('would', 66809), ('use', 61676), ('screen', 60145), ('good', 58601), ('battery', 57976), ('well', 51149), ('iphone', 47691), ('get', 46380), ('charge', 44897), ('charger', 38646), ('product', 38223), ('really', 38055), ('also', 37145), ('time', 36661), ('works', 32743)]
 
- After stemming
+Top 20 most frequent words after stemming:
  [('phone', 192494), ('case', 165228), ('use', 118087), ('one', 92736), ('charg', 92539), ('like', 79743), ('work', 76325), ('great', 66912), ('would', 66814), ('batteri', 66237), ('screen', 61812), ('get', 61243), ('good', 58823), ('look', 52093), ('well', 51161), ('iphon', 50521), ('fit', 50296), ('time', 48381), ('charger', 45281), ('protect', 44734)]
 ```
 **POS Tagging**
 ```
+POS Tagging for 5 random sentences: 
 it looked good but did not fit properly the volume would change without touching the buttons and the vibrate switch was partially covered buy a different bumper they are all much better => [('it', 'PRP'), ('looked', 'VBD'), ('good', 'JJ'), ('but', 'CC'), ('did', 'VBD'), ('not', 'RB'), ('fit', 'VB'), ('properly', 'RB'), ('the', 'DT'), ('volume', 'NN'), ('would', 'MD'), ('change', 'VB'), ('without', 'IN'), ('touching', 'VBG'), ('the', 'DT'), ('buttons', 'NNS'), ('and', 'CC'), ('the', 'DT'), ('vibrate', 'NN'), ('switch', 'NN'), ('was', 'VBD'), ('partially', 'RB'), ('covered', 'VBN'), ('buy', 'VB'), ('a', 'DT'), ('different', 'JJ'), ('bumper', 'NN'), ('they', 'PRP'), ('are', 'VBP'), ('all', 'DT'), ('much', 'RB'), ('better', 'JJR')]
 
 bought for my security system, and works just like the original => [('bought', 'NN'), ('for', 'IN'), ('my', 'PRP$'), ('security', 'NN'), ('system', 'NN'), ('and', 'CC'), ('works', 'VBZ'), ('just', 'RB'), ('like', 'IN'), ('the', 'DT'), ('original', 'JJ'), ('when', 'WRB'), ('this', 'DT'), ('one', 'CD'), ('goes', 'VBZ'), ('bad', 'JJ'), ('it', 'PRP'), ('is', 'VBZ'), ('a', 'DT'), ('battery', 'NN'), ('after', 'IN'), ('all', 'DT'), ('i', 'NN'), ('will', 'MD'), ('get', 'VB'), ('another', 'DT'), ('right', 'NN'), ('here', 'RB')]
