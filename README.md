@@ -17,6 +17,10 @@ Project assignment for NTU CZ4045 Natural Language Processing
 - [Placing dataset files](#placing-dataset-files)
 - [Project Installation Guide](#project-installation-guide)
 - [Usage guide](#usage-guide)
+  - [Dataset Analysis](#1-dataset-analysis)
+  - [Noun Phrase Summarizer](#2-noun-phrase-summarizer)
+  - [Sentiment Word Detection](#3-sentiment-word-detection)
+  - [Application](#4-application)
 
 
 ## Placing dataset files
