@@ -166,3 +166,14 @@ For 3.9.2
 javac -cp stanford-corenlp-3.9.2.jar:stanford-corenlp-3.9.2-javadoc.jar:stanford-corenlp-3.9.2-models.jar:stanford-corenlp-3.9.2-sources.jar: NegationDetection.java && java -cp stanford-corenlp-3.9.2.jar:stanford-corenlp-3.9.2-javadoc.jar:stanford-corenlp-3.9.2-models.jar:stanford-corenlp-3.9.2-sources.jar: -Xmx1200m NegationDetection
 ```
 5. Feel free to modify **testString** to see the different results the tool produce. 
+
+After running the program, a long list of workings will be shown, and the output ends off with a comparison between the original string and the negated string. 
+
+```
+Original String
+I'm sure that there is something that says it will not come pictured, still I was disappointed. The tools helped me get the job done, but they also did not hold up well. The plastic plying tools didn't hold and broke fairly quickly. I can't say that it wasn't user error, but they seemedvery cheap.
+New String
+[i, 'm, sure, that, there, is, something, that, says, it, will, not, no1_come, no1_pictured, no1, no1_still, no1_i, no1_was, no1_disappointed, ., the, tools, helped, me, get, the, job, done, ,, but, they, also, did, not, no1_hold, no1_up, no1_well, ., the, plastic, plying, tools, did, n't, no1_hold, no1, no1_broke, no1_fairly, no1_quickly, ., i, ca, n't, no1_say, no1_that, no1_it, no1_was, no1_n't, no1_user, no1_error, ,, but, they, seemed, very, cheap, .]
+```
+
+From this, one will be able to observed the changes made by the application. To understand why and when the change was made, the workings can be traced back: each (original) word is printed out in a line and the changes are prepended with words like 'Replaced' and 'Negating word: '
