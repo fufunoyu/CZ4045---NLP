@@ -82,9 +82,6 @@ A18U49406IPPIJ    109
 AYB4ELCS5AM8P     107
 Name: reviewerID, dtype: int64
 ```
-**Sentence Segmentation**
-
-![alt text](results/dataset_analysis/sentence_segmentation.png)
 
 **Sample Sentence Lengths**
 ```
@@ -95,14 +92,6 @@ Name: reviewerID, dtype: int64
 137800,B00AGABISW,5,"I seriously buy a lot of phone cases and screen protectors.  These screen protectors last the longest for me so far.  Easy to put on and they stay. In. Place.  You get three but the one has been on my phone for months.  Spend the money on these.  They're worth it.  They are easy to install.  You'll need the right environment so a construction site is a no-no.  They supply you with the dust remover tape so that is a giant plus. Edit Sept 10, 2013:I've just removed my first one since it was a little beat up.  I've dropped a few things on my screen (not on purpose, c'mon...)and I had to replace it.  Took 3 minutes.  No dust under the screen.  At.  All. Hint:  After you clean your screen.  Use the provided tape remover tabs to get the stragglers and you shouldn't have to lift up the protector.","06 4, 2013",A2W88VUGI6DMEM,The best so far,1370304000,19
 167960,B00DZ62K18,3,"Out of the box there was one thing I really liked about the M2 and M3 Bolse series was the fact that they had digital displays indicating the amount of charge left in the battery pack. I was pleased because this innovative design will allow the user to know exactly how much juice is left in the battery.  The LEDs are nice but as a rule, you'll only see three or four of them and the range of charge can be wide.  I'm used to working with these batteries and keep them charged up.  However, if you have one and only have 1 LED remaining, you may have a 1% charge or a 24% charge.  If you had a fuel gauge like that in a car, you might be driving on 1/4 of a tank or fumes.  Novel idea and I really liked it. I liked the promise of this battery, as well as the M2, until I started to test them.  I cannot speak for anyone else, but I test every battery I get ... in real-time circumstances.  I use my iPad a lot and when it's powered down sufficiently I start testing.  I figured a 6600mAh battery would be able to do a sufficient job powering up an iPad with a 46% charge remaining. The M3 struggled from the start with an immediate drop in charge from 97% down to 65% in fifteen minutes.  It was then I decided to watch and record very closely what was going on. A casual approach is usually my thing, but instead of a stellar performance I'd expect from a 6600mAh battery pack, I only got an average one.  Bolse is usually a performer, but for some reason the M2 and M3 battery packs fell a bit short of my expectations.  The performance was OK, but nothing more.  If you want a Bolse, which is an excellent brand, I'd look at the AON series, which really performed spectacularly.  I'm rating this one a three, which is OK, on the Amazon scale. Bolse M3 (6600mAh) - 97% charged at startiPad - 46% charge at start15 minutes -  51%  (65%)30 minutes -  56%  (58%)45 minutes -  61%  (55%)60 minutes -  66%  (51%)75 minutes -  71 % (39%)90 minutes -  76%  (37%)120 minutes - 82% (19%)135 minutes - 85%  (LO)150 - The M3 stopped charging at this pointWHAT'S IN THE BOX:~ 1 Bolse M3 External Battery~ 3 connectors~ 1 Micro USB power cable~ 1 velvet-like travel pouch~ Quick start guideSPECS:~ Battery type: Li-ion battery~ Life cycle: ~500 cycles~ Input current:  800mAh~ Output current:Output USB1:  for iPad / iPhoneOutput USB2 for All Smartphones2A total max~ Capacity:  6600mAh~ Size: 4.13 x 2.36 x 0.71 inches~  Weight:  5.76 ounces~  Certifications:  CE & FCC & ROHSWarranty:  12 months limitedSample provided for review.","08 22, 2013",ACJT8MUC0LRF0,"The M3 has an innovative design with the Smart digital display, but falls short in performance ...",1377129600,19
 ```
-
-**Tokenized words without stemming**
-
-![alt text](results/dataset_analysis/tokenized_words_without_stemming.png)
-
-**Tokenized words with stemming**
-
-![alt text](results/dataset_analysis/tokenized_words_with_stemming.png)
 
 **Top 20 most frequent words**
 ```
@@ -128,6 +117,10 @@ love these screen protectors  the antiglarefingerprint feature works great  i us
 
 thanks bought  3 different colors  fit like a glove  protects well and looks very nice came fast and we are very very pleased with them thank you => [('thanks', 'NNS'), ('bought', 'VBD'), ('3', 'CD'), ('different', 'JJ'), ('colors', 'NNS'), ('fit', 'VBP'), ('like', 'IN'), ('a', 'DT'), ('glove', 'NN'), ('protects', 'VBZ'), ('well', 'RB'), ('and', 'CC'), ('looks', 'VBZ'), ('very', 'RB'), ('nice', 'JJ'), ('came', 'VBD'), ('fast', 'RB'), ('and', 'CC'), ('we', 'PRP'), ('are', 'VBP'), ('very', 'RB'), ('very', 'RB'), ('pleased', 'JJ'), ('with', 'IN'), ('them', 'PRP'), ('thank', 'VBP'), ('you', 'PRP')]
 ```
+
+In addition, the following shows the graph plot for frequency statistics of sentence segmentation, tokenized word without stemming, and tokenized word with stemming. This graph will be available as `.png` image in the folder [here](results/dataset_analysis/) once the program finish running.
+![alt text](results/dataset_analysis/graph_result.png)
+
 
 #### 2. Noun Phrase Summarizer
 Execute the following command in `command prompt` to start generating the top 20 positive and negative words.
