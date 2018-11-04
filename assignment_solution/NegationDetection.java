@@ -33,15 +33,15 @@ public class NegationDetection {
         }
     }
 
-    public static Boolean checkBut(int index, List<CoreLabel> list) {
-        // System.out.println("In checkBut");
+    public static Boolean checkButYet(int index, List<CoreLabel> list) {
+        // System.out.println("In checkButYet");
         if (index < list.size())
         {
-            if (list.get(index).get(TextAnnotation.class).equals("but"))
+            if (list.get(index).get(TextAnnotation.class).equals("but") || list.get(index).get(TextAnnotation.class).equals("yet"))
             {
                 String wordBefore = list.get(index-1).get(TextAnnotation.class);
                 String wordAfter = list.get(index+1).get(TextAnnotation.class);
-                System.out.println("But found between " + wordBefore + " and " + wordAfter);
+                System.out.println("But/Yet found between " + wordBefore + " and " + wordAfter);
                 return true;
             }
             return false;
@@ -127,7 +127,7 @@ public class NegationDetection {
         // if negation present, process text further
         if (flag == true)
         {
-            if (checkBut(index + 1, list))
+            if (checkButYet(index + 1, list))
             {
                 System.out.println("Ending at +1");
                 return flag;
@@ -135,7 +135,7 @@ public class NegationDetection {
             negateWord(index + 1, list);
             changeToNo(index + 1, list);
 
-            if (checkBut(index + 2, list))
+            if (checkButYet(index + 2, list))
             {
                 System.out.println("Ending at +2");
                 return flag;
@@ -143,7 +143,7 @@ public class NegationDetection {
             negateWord(index + 2, list);
             changeToNo(index + 2, list);
 
-            if (checkBut(index + 3, list))
+            if (checkButYet(index + 3, list))
             {
                 System.out.println("Ending at +3");
                 return flag;
@@ -151,7 +151,7 @@ public class NegationDetection {
             negateWord(index + 3, list);
             changeToNo(index + 3, list);
 
-            if (checkBut(index + 4, list)) 
+            if (checkButYet(index + 4, list)) 
             {
                 System.out.println("Ending at +4");
                 return flag;
@@ -164,22 +164,34 @@ public class NegationDetection {
     }
     public static void main(String[] args) {
         
+        // Not-negators
         negationWords.add("no");
         negationWords.add("not");
         negationWords.add("n't");
-        negationWords.add("nothing");
-        // negationWords.add("");
-        // negationWords.add("");
-        // negationWords.add("");
-        // negationWords.add("");
 
-        String testString = "I'm sure that there is something that says it will not come as pictured, but still I was disappointed. The tools helped me get the job done, but they also did not hold up well. The plastic plying tools didn't hold and broke fairly quickly. I can't say that it wasn't user error, but they seemed very cheap.";
-        testString = testString.toLowerCase();
+        // N-negators
+        negationWords.add("barely");
+        negationWords.add("few");
+        negationWords.add("hardly");
+        negationWords.add("little");
+        negationWords.add("neither");
+        negationWords.add("never");
+        negationWords.add("nobody");
+        negationWords.add("none");
+        negationWords.add("nor");
+        negationWords.add("nothing");
+        negationWords.add("nowhere");
+        negationWords.add("rarely");
+        negationWords.add("scarcely");
+        negationWords.add("seldom");
+
+        String testString = "I'm sure that there is something that says it will not come pictured, but still I was disappointed. The tools helped me get the job done, but they also did not hold up well. The plastic plying tools didn't hold and broke fairly quickly. I can't say that it wasn't user error, but they seemed very cheap.";
+        String testStringLower = testString.toLowerCase();
         Properties props = new Properties();
         props.put("annotators", "tokenize, ssplit"); // , pos, lemma");
         StanfordCoreNLP pipeline = new StanfordCoreNLP(props);
 
-        Annotation document = new Annotation(testString);
+        Annotation document = new Annotation(testStringLower);
         pipeline.annotate(document);
         System.out.println("Text processed!");
         
@@ -210,10 +222,11 @@ public class NegationDetection {
         
         System.out.println("\n\n");
 
-        System.out.println("New String");
-        System.out.println(wordsNegated.toString());
-        
         System.out.println("Original String");
         System.out.println(testString);
+        
+        System.out.println("New String");
+        System.out.println(wordsNegated.toString());
+    
     }
 }
