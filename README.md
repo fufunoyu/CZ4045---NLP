@@ -52,7 +52,7 @@ $ python main.py sentiment
 ``` 
 A trace sample and graph image of the result can be found in the folder [here](results/sentiment_word_detection/).
 
-![alt text](results/sentiment_word_detection/result.PNG)
+![alt text](results/sentiment_word_detection/result.png)
 
 Please note that for the `trace.txt` the actual console output will differ somewhat as the file does not include console output for printing progress such as `1000 of 190,000 done`.
 
