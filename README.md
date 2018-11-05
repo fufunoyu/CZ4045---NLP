@@ -123,7 +123,7 @@ In addition, the following shows the graph plot for frequency statistics of sent
 
 
 ### 2. Noun Phrase Summarizer
-Execute the following command in `command prompt` to start generating the top 20 positive and negative words.
+Execute the following command in `command prompt` to start generating the top 20 most frequent noun phrase.
 ```
 $ python main.py nounphrase
 ``` 

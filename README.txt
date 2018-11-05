@@ -8,6 +8,9 @@ Project assignment for NTU CZ4045 Natural Language Processing
 4. Phang Jun Yu ([phangjunyu](https://github.com/phangjunyu))
 5. Soh Jun Jie ([sohjunjie](https://github.com/sohjunjie))
 
+### Readme Notice	
+All relative links included here assume that you are currently inside the `source` folder (project folder)
+
 
 ## Version information
 - Python 3.6
