@@ -38,10 +38,11 @@ def clean_dataset():
 		
 		review = d.reviewText
 		review_lower = review.lower()
-		review_no_html_code = html.parser.unescape(review_lower)
-		review_no_url = re.sub(url_regex, '<URL>', review_no_html_code)
+		review_no_url = re.sub(url_regex, 'http_url', review_lower)
+		review_no_html_code = html.parser.unescape(review_no_url)
+		review_no_space = re.sub(r"([A-Za-z])\.([A-Za-z])", r"\g<1>. \g<2>", review_no_html_code)
 
-		amazonReviewDF.iloc[count,col_label] = review_no_url
+		amazonReviewDF.iloc[count,col_label] = review_no_space
 		count += 1
 	# print('after')
 	# print(amazonReviewDF.iloc[1,2])
