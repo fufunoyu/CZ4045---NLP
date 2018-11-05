@@ -114,8 +114,8 @@ venv.bak/
 .dmypy.json
 dmypy.json
 
-source/dataset/*.json
-source/dataset/*.csv
-source/dataset/*.txt
+SourceCode/dataset/*.json
+SourceCode/dataset/*.csv
+SourceCode/dataset/*.txt
 
 .vscode/
