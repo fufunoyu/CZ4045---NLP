@@ -66,8 +66,6 @@ class ConsecutiveNPChunker(nltk.ChunkParserI):
     def load(self):
         self.tagger = pickle.load(open('npchunker.pickle', 'rb'))
        
-
-    # this func not called because we want to load the model from memory instead of retraining it everytime. this func is the reference for test_chunker
     def parse(self, sentence):
         tagged_sents = self.tagger.tag(sentence)
         conlltags = [(w,t,c,) for ((w,t), c) in tagged_sents]

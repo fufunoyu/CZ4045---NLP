@@ -23,7 +23,7 @@ regex_parser = RegexpParser(grammar)
 chunk_parser = ConsecutiveNPChunker()
 # uncomment these two lines if chunktagger is used
 # # chunk_parser.train_and_save()
-# chunk_parser.load()
+chunk_parser.load()
 
 # cleans dataset by removing URLs and converting all to lowercase
 def clean_dataset():
@@ -59,7 +59,7 @@ def extract_top_20_from_reviews(amazonReviewDF, mode="regexp"):
 	parser = regex_parser if mode == "regexp" else chunk_parser
 	for index, d in tqdm.tqdm(amazonReviewDF.iterrows()):
 		input_data = d.reviewText + " " + d.summary
-		extract_np(c, input_data, parser)
+		extract_np(c, input_data, parser, mode)
 	
 	print("\n {}".format(c.most_common(20)))
 
@@ -72,11 +72,11 @@ def top_3(amazonReviewDF, mode="regexp"):
 		df = amazonReviewDF.loc[amazonReviewDF.asin==product]
 		for index, d in tqdm.tqdm(df.iterrows()):
 			input_data = d.reviewText + " " + d.summary
-			extract_np(c, input_data, parser)				
+			extract_np(c, input_data, parser, mode)				
 		print("\n10 representative noun phrases for {} are: {}".format(product, c.most_common(10)))
 
 # This function is called for every review. It tokenizes the review, tags it with nltk's default POS tagger and parses it according to the grammar defined at the start of this file
-def extract_np(c, data, parser):	
+def extract_np(c, data, parser, mode):	
 	text = word_tokenize(data)
 	sentence = pos_tag(text)
 	result = []
@@ -84,7 +84,7 @@ def extract_np(c, data, parser):
 	# # Clearer visuals for debugging
 	# print(parsed_sentence)
 	# parsed_sentence.draw()
-	for np in clean_np(parsed_sentence):
+	for np in clean_np(parsed_sentence, mode):
 		result.append(np)
 	# This counts number of times the NPs appears in the input data(review + summary) 
 	c.update(lower_and_lemma(result))
@@ -99,11 +99,13 @@ def lower_and_lemma(phrases):
 	return result
 
 # used to remove the POS tag and return the noun phrase in a readable form
-def clean_np(parsed_sentence):
+def clean_np(parsed_sentence, mode):
 	for subtree in parsed_sentence.subtrees():
 		if subtree.label() == 'NP':
-			# DT tag was for the initial grammar structure
-			yield ' '.join(word for word,tag in subtree.leaves() if not (tag == 'DT' and str.lower(word) in ['the', 'a', 'an', 'these', 'that', 'this', 'those']))
+			if mode == "regexp":
+				yield ' '.join(word for word,tag in subtree.leaves() if not (tag == 'DT' and str.lower(word) in ['the', 'a', 'an', 'these', 'that', 'this', 'those']))
+			else: # no need to remove determinants if using chunk tagger
+				yield ' '.join(word for word,tag in subtree.leaves())
 
 def five_reviews(amazonReviewDF, mode="regexp"):
 	# 5 indexes chosen randomly from a RNG
@@ -115,21 +117,21 @@ def five_reviews(amazonReviewDF, mode="regexp"):
 	for index, d in tqdm.tqdm(df.iterrows()):
 		c = Counter()
 		input_data = d.reviewText + " " + d.summary
-		extract_np(c, input_data, parser)
+		extract_np(c, input_data, parser, mode)
 		print("Review number: {}".format(index))
 		print("Review Text and summary: {}".format(input_data))				
-		print("representative noun phrases are: {}".format(list(c.elements())))
+		print("representative noun phrases are: {}".format(set(c.elements())))
 
 def main():
 	# For cleaned dataset uncomment the two lines below and comment the third line but the difference is minimal
 	# save_clean_dataset()
 	# data = pickle.load(open('clean_data.pickle', 'rb'))
 	data = pd.read_json(amazon_review_file_loc, lines=True)
-	# mode = "chunktagger"
-	mode = "regexp"
+	mode = "chunktagger"
+	# mode = "regexp"
 	print("mode is {}".format(mode))
-	top_3(data, mode)
-	extract_top_20_from_reviews(data, mode)
+	# top_3(data, mode)
+	# extract_top_20_from_reviews(data, mode)
 	five_reviews(data, mode)
 
 
