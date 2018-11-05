@@ -1,7 +1,0 @@
-[10 representative noun phrases for the top 3 products]
-
-10 representative noun phrases for B005SUHPO6 are: [('screen protector', 78), ('great case', 69), ('great product', 53), ('otter box', 41), ('great protection', 37), ('otterbox defender', 36), ('otterbox case', 33), ('best case', 32), ('good case', 29), ('belt clip', 23)]
-
-10 representative noun phrases for B0042FV2SI are: [('screen protector', 172), ('matte finish', 44), ('great product', 30), ('finger print', 20), ('anti glare', 19), ('great price', 15), ('good product', 14), ('matte finishing', 13), ('air bubble', 12), ('screen cover', 11)]
-
-10 representative noun phrases for B008OHNZI0 are: [('screen protector', 311), ('tech armor', 89), ('great product', 61), ('great screen protector', 37), ('home button', 28), ('best screen protector', 26), ('air bubble', 25), ('good product', 23), ('retina display', 22), ('matte finish', 20)]

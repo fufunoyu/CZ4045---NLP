@@ -1,0 +1,44 @@
+[Top 20 noun phrases with normal dataset]
+ screen protector, 15653
+ great case, 5836
+ great product, 5667
+ battery life, 4154
+ same time, 3674
+ sound quality, 3563
+ cell phone, 3492
+ great price, 3464
+ usb port, 3336
+ good case, 2846
+ good product, 2828
+ nice case, 2497
+ power button, 2466
+ car charger, 2308
+ phone case, 2276
+ long time, 2216
+ good quality, 2188
+ battery pack, 2181
+ only thing, 2148
+ usb cable, 1903
+
+
+[Top 20 noun phrases after cleaning dataset]
+screen protector, 15663
+great case, 5854
+great product, 5664
+battery life, 4121
+same time, 3635
+sound quality, 3548
+cell phone, 3507
+great price, 3469
+usb port, 3360
+good case, 2850
+good product, 2816
+nice case, 2522
+power button, 2473
+car charger, 2304
+phone case, 2284
+long time, 2214
+good quality, 2199
+battery pack, 2166
+usb cable, 1867
+perfect fit, 1865
