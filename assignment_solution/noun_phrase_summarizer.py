@@ -23,11 +23,11 @@ regex_parser = RegexpParser(grammar)
 chunk_parser = ConsecutiveNPChunker()
 # uncomment these two lines if chunktagger is used
 # # chunk_parser.train_and_save()
-chunk_parser.load()
+# chunk_parser.load()
 
 # cleans dataset by removing URLs and converting all to lowercase
-def clean_dataset():
-	amazonReviewDF = pd.read_json(amazon_review_file_loc, lines=True)
+def clean_dataset(amazonReviewDF):
+	# amazonReviewDF = pd.read_json(amazon_review_file_loc, lines=True)
 	col_label = amazonReviewDF.columns.get_loc("reviewText") 
 	url_regex = r"https?\:\/\/[0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*(:(0-9)*)*(\/?)([a-zA-Z0-9\-\.\?\,\'\/\\\+&amp;%\$#_]*)?"
 
@@ -40,7 +40,7 @@ def clean_dataset():
 		review_lower = review.lower()
 		review_no_url = re.sub(url_regex, 'http_url', review_lower)
 		review_no_html_code = html.parser.unescape(review_no_url)
-		review_no_space = re.sub(r"([A-Za-z])\.([A-Za-z])", r"\g<1>. \g<2>", review_no_html_code)
+		review_no_space = re.sub(r"([A-Za-z])\.([-A-Za-z])", r"\g<1>. \g<2>", review_no_html_code)
 
 		amazonReviewDF.iloc[count,col_label] = review_no_space
 		count += 1
@@ -50,8 +50,8 @@ def clean_dataset():
 	return amazonReviewDF
 
 # saves clean dataset into pickle file for re-use
-def save_clean_dataset():
-	cleaned_data = clean_dataset()
+def save_clean_dataset(data):
+	cleaned_data = clean_dataset(data)
 	pickle.dump(cleaned_data, open('clean_data.pickle', 'wb'))
 
 # Loops through entire collection of all reviews, concatenates summary and review text, extracts the noun phrases and stores it in a Counter object
@@ -113,8 +113,8 @@ def five_reviews(amazonReviewDF, mode="regexp"):
 	# 	>>> random.choices(range(190919), k=5)	
 	five_random_review_indexes = [121689, 163717, 30475, 187484, 151476]
 	parser = regex_parser if mode == "regexp" else chunk_parser
-		
 	df = amazonReviewDF.iloc[five_random_review_indexes]
+	df = clean_dataset(df)
 	for index, d in tqdm.tqdm(df.iterrows()):
 		c = Counter()
 		input_data = d.reviewText + " " + d.summary
@@ -124,15 +124,16 @@ def five_reviews(amazonReviewDF, mode="regexp"):
 		print("representative noun phrases are: {}".format(set(c.elements())))
 
 def main():
-	# For cleaned dataset uncomment the two lines below and comment the third line but the difference is minimal
-	# save_clean_dataset()
-	# data = pickle.load(open('clean_data.pickle', 'rb'))
 	data = pd.read_json(amazon_review_file_loc, lines=True)
-	mode = "chunktagger"
-	# mode = "regexp"
+	# For cleaned dataset uncomment the two lines below but the difference is minimal
+	# save_clean_dataset(data)
+	# data = pickle.load(open('clean_data.pickle', 'rb'))
+
+	# mode = "chunktagger"
+	mode = "regexp"
 	print("mode is {}".format(mode))
-	# top_3(data, mode)
-	# extract_top_20_from_reviews(data, mode)
+	top_3(data, mode)
+	extract_top_20_from_reviews(data, mode)
 	five_reviews(data, mode)
 
 

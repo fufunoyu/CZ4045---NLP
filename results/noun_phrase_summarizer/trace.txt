@@ -14,22 +14,21 @@ mode is regexp
  [('screen protector', 15653), ('great case', 5836), ('great product', 5667), ('battery life', 4154), ('same time', 3674), ('sound quality', 3563), ('cell phone', 3492), ('great price', 3464), ('usb port', 3336), ('good case', 2846), ('good product', 2828), ('nice case', 2497), ('power button', 2466), ('car charger', 2308), ('phone case', 2276), ('long time', 2216), ('good quality', 2188), ('battery pack', 2181), ('only thing', 2148), ('usb cable', 1903)]
  
 0it [00:00, ?it/s]Review number: 121689
-Review Text and summary: I purchased this hoping to replace a cheaper phone case purchased from amazon. However, the cheaper one is a better product. ok
-representative noun phrases are: ['cheaper phone case', 'cheaper one', 'better product']
-1it [00:02,  2.30s/it]Review number: 163717
-Review Text and summary: dont bother with those tempered glass protectors. This is what you need right here. Enough hardness so it doesnt get scratched when you rub it down with a cloth. No visual distortions and the pen feels great on it. 3 pack is great if you screw up or need to replace it down the road. Dont waste money on more expensive bs. feels really good and looks great!
-representative noun phrases are: ['dont bother with tempered glass protector', 'enough hardness', 'no visual distortion', 'pen feel', 'dont waste money', 'expensive b']
+Review Text and summary: i purchased this hoping to replace a cheaper phone case purchased from amazon. however, the cheaper one is a better product. ok
+representative noun phrases are: {'cheaper one', 'cheaper phone case', 'better product'}
+1it [00:02,  2.53s/it]Review number: 163717
+Review Text and summary: dont bother with those tempered glass protectors. this is what you need right here. enough hardness so it doesnt get scratched when you rub it down with a cloth. no visual distortions and the pen feels great on it. 3 pack is great if you screw up or need to replace it down the road. dont waste money on more expensive bs. feels really good and looks great!
+representative noun phrases are: {'dont waste money', 'pen feel', 'enough hardness', 'expensive b', 'dont bother with tempered glass protector', 'no visual distortion'}
 Review number: 30475
-Review Text and summary: The first thing that struck me when I got this was the size.  It's very thin.The nice part about this is it easily slips into my laptop bag, my
-pocket, or many other places without being too much of a bother.  The downside is that means it doesn't have all that much juice.I've had a few of these battery packs, so I'll go through how I think this one stands up.The Pro's- Thin, fits easily in a pocket for day use- Contains a micro-usb cable, huge plus for portability.- Sturdy, feels quite well built, solid.The Con's- Power  at only ~1400mAh it's not going to give you a full charge on most things, but is enough to get a few more hours use out of
-most things.- Price, for this price there are (bulkier) 5000 mAh packs, but here you're paying a price for thinness, and the convenience of a cable built in. Tiny with built in cable
-representative noun phrases are: ['first thing', 'thin.the nice part', 'laptop bag', 'many other place', 'much juice.i', 'battery pack', "up.the pro's- thin", 'micro-usb cable', 'huge plus for portability.- sturdy', "con's- power", 'full charge on most thing', 'few more hour', 'most things.- price', 'mah pack']
+Review Text and summary: the first thing that struck me when i got this was the size.  it's very thin. the nice part about this is it easily slips into my laptop bag, my pocket, or many other places without being too much of a bother.  the downside is that means it doesn't have all that much juice. i've had a few of these battery packs, so i'll go through how i think this one stands up. the pro's- thin, fits easily in a pocket for day use- contains a micro-usb cable, huge plus for portability. - sturdy, feels quite well built, solid. the con's- power  at only ~1400mah it's not going to give you a full charge on most things, but is enough to get a few more hours use out of most things. - price, for this price there are (bulkier) 5000 mah packs, but here you're paying a price for thinness, and the convenience of a cable built in. Tiny
+with built in cable
+representative noun phrases are: {'first thing', 'huge plus', 'micro-usb cable', 'mah pack', 'battery pack', 'many other place', 'most thing', 'much juice', "con's- power", 'few more hour', 'laptop bag', "pro's- thin", 'full charge on most thing', 'nice part'}
 Review number: 187484
-Review Text and summary: I must have at least 50 cases in my house, for,my IPhone 5s. I know what I want, but no one has even able to give me a case that I think is perfect. Finally, this case comes very close.This is a hybrid case that combines soft TPU sides with a hard polycarbonate back. It has a small lip on the case so you can feel safe that the screen is protected. It also allows the phone to have a very slim profile, with an easy grip and access to all ports.What I really love is that it has a
-clear matte  back so I can actually, finally, see my beautiful IPhone! I have found most cases with clear backs are not really &#34;clear&#34;, but this one is.Also, it
-does not remove or scratch my screen saver, which is a real plus to me.It looks like I have found a new favorite case. Thank you Totallee, for allowing me to review your case! Excellent case that allows you to see your iPhone...
-representative noun phrases are: ['hybrid case', 'soft tpu side with hard polycarbonate', 'small lip', 'slim profile', 'easy grip', 'clear matte', 'beautiful iphone', 'most case with clear back', 'screen saver', 'real plus', 'new favorite case', 'excellent case']
+Review Text and summary: i must have at least 50 cases in my house, for,my iphone 5s. i know what i want, but no one has even able to give me a case that i think is perfect. finally, this case comes very close. this is a hybrid case that combines soft tpu sides with a hard polycarbonate back. it has a small lip on the case so you can feel safe that the screen is protected. it also allows the phone to have a very slim profile, with an easy grip and access to all ports. what i really love is that it has
+a clear matte  back so i can actually, finally, see my beautiful iphone! i have found most cases with clear backs are not really "clear", but this one is. also, it does
+not remove or scratch my screen saver, which is a real plus to me. it looks like i have found a new favorite case. thank you totallee, for allowing me to review your case! Excellent case that allows you to see your iPhone...
+representative noun phrases are: {'clear matte', 'easy grip', 'small lip', 'soft tpu side with hard polycarbonate', 'new favorite case', 'screen saver', 'excellent case', 'hybrid case', 'most case with clear back', 'slim profile', 'real plus', 'beautiful iphone'}
 Review number: 151476
-Review Text and summary: Stylish and attractive.  Good seal around the edges.  Buttons work fine. Excellent drop protection.  Works fine with the RND Dock. She-a-looks-ana-feels like a Ferrari
-representative noun phrases are: ['good seal', 'button work fine', 'excellent drop protection', 'rnd dock']
-5it [00:02,  2.07it/s]
+Review Text and summary: stylish and attractive.  good seal around the edges.  buttons work fine. excellent drop protection.  works fine with the rnd dock. She-a-looks-ana-feels like a Ferrari
+representative noun phrases are: {'excellent drop protection', 'good seal', 'rnd dock'}
+5it [00:02,  1.91it/s]
